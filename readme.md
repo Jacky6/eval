@@ -16,5 +16,31 @@ allocation.js           自定义配置文件
 
 
 使用说明：
-装好 node.js , mysql
-直接 node install
+1、安装node.js + mysql
+
+2、克隆代码到本地
+```
+git clone 
+```
+
+3、安装依赖
+```
+node install
+```
+
+4、配置全局参数 allocation.js 
+```
+ 设置测评选项
+
+ 设置数据库
+```
+
+5、同步数据库
+```
+node db.js
+```
+
+6、启动项目
+```
+node index.js
+```
