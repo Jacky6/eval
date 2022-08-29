@@ -1,0 +1,80 @@
+<header class="am-topbar">
+    <div class="am-container">
+        <h1 class="am-topbar-brand">
+            <a href="/">微博</a>
+        </h1>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+                data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+                    class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li><a href="/">广场</a></li>
+            </ul>
+
+            <% if(userId) { %>
+                <div class="am-topbar-right">
+                    <li class="am-dropdown" data-am-dropdown>
+                        <a class="text-white am-dropdown-toggle am-btn am-btn-primary am-topbar-btn am-btn-sm"
+                           data-am-dropdown-toggle href="javascript:;">
+                            个人中心 <span class="am-icon-caret-down"></span>
+                        </a>
+                        <ul class="am-dropdown-content">
+                            <li><a href="/user/home">个人首页</a></li>
+                            <li><a href="/user/profile">修改资料</a></li>
+                            <li class="am-divider"></li>
+                            <li><a href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a></li>
+                        </ul>
+                    </li>
+                </div>
+            <% } else{ %>
+                <div class="am-topbar-right">
+                    <a href="/user/login" class="text-white am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
+                </div>
+                <div class="am-topbar-register">
+                    <a href="/user/register" class="text-white am-btn am-btn-primary am-topbar-btn am-btn-sm">注册</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</header>
+
+<div class="am-container">
+    <div class="am-g">
+        <ol class="am-breadcrumb">
+            <li><a href="/">广场</a></li>
+            <li><a href="/weibo/show/<%= weibo.id %>">微博详情</a></li>
+            <li class="am-active">转发微博</li>
+        </ol>
+        <form method="post" class="am-form" action="/weibo/share/<%= weibo.id %>">
+            <h3>转发微博</h3>
+            <textarea style="resize: none" name="content" rows="4" maxlength="140" placeholder="转发内容"></textarea>
+            <br>
+            <div class="am-cf">
+                <input type="submit" name="" value="转发" class="am-btn am-btn-primary am-btn-sm am-fr">
+            </div>
+        </form>
+        <hr>
+        <article class="am-comment">
+            <a href="/user/homepage/<%= weibo.userId %>">
+                <img src="/image/avatar.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+
+            <div class="am-comment-main">
+                <header class="am-comment-hd">
+                    <div class="am-comment-meta">
+                        <a href="/user/homepage/<%= weibo.userId %>"
+                           class="am-comment-author"><%= weibo.user.nickname || '无昵称' %></a>
+                        发表于
+                        <time datetime="<%= weibo.createdAt %>"><%= weibo.createdAt.toLocaleString() %></time>
+                    </div>
+                </header>
+
+                <div class="am-comment-bd">
+                    <%= weibo.content %>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
