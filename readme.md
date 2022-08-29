@@ -25,7 +25,7 @@ git clone
 
 3、安装依赖
 ```
-node install
+npm install
 ```
 
 4、配置全局参数 allocation.js 
