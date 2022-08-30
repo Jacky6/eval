@@ -11,7 +11,7 @@ exports.publish = async function (obj){
         console.log('插入成功', res.map(res => { res.toJSON() }));
     }
     catch (e) {
-        console.log('插入失败');
+        console.log('插入失败', e);
     } 
 }
 

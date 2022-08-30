@@ -1,4 +1,12 @@
-node_modules            项目依赖库
+#### Mysql + Node.js (koa) => 主观测评平台
+#### 项目说明：
+https://www.cnblogs.com/zjacky/p/16628211.html
+
+
+#### 项目目录说明:
+
+```
+node_modules            项目依赖库(npm install之后自动生成)
 //后端
 shared                  共享组件
 middlewares kos         中间件
@@ -13,9 +21,9 @@ public                  静态文件
 index.js                入口文件
 package.json            包描述文件
 allocation.js           自定义配置文件
+```
 
-
-使用说明：
+#### 使用说明：
 1、安装node.js + mysql
 
 2、克隆代码到本地
@@ -32,7 +40,9 @@ npm install
 ```
  设置测评选项
 
- 设置数据库
+ 设置待评测数据库名称和路径
+
+ 设置mysql数据库参数
 ```
 
 5、同步数据库
