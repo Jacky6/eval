@@ -29,7 +29,19 @@ module.exports = (sequelize, DataTypes) => {
             },
             comment: '账号'
         },
-        password: {type: DataTypes.CHAR(64), allowNull: false, comment: '密码'},
+        password: {type: DataTypes.CHAR(64), allowNull: false, validate: {
+            notEmpty: {
+                msg: '密码不能为空'
+            },
+            len: {
+                msg: '密码长度为6-20位',
+                args: [6, 20]
+            },
+            isAlphanumeric: {
+                msg: '只能包含字母和数字'
+            }
+            },
+            comment: '密码'},
         nickname: {type: DataTypes.STRING(20), allowNull: false, defaultValue: '', comment: '昵称'},
         evalnum: {type: DataTypes.INTEGER, allowNull: true, defaultValue: 0, comment: '已参与测评数量'}
     }, {

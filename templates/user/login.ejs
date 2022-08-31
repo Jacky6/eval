@@ -1,60 +1,67 @@
-<header class="am-topbar">
-    <div class="am-container">
-        <h1 class="am-topbar-brand">
-            <a href="/">主观测评平台</a>
-        </h1>
+<!doctype html>
+<html lang="en">
 
-        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-                data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-                    class="am-icon-bars"></span></button>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.88.1">
+  <title>Signin Template · Bootstrap v5.1</title>
 
-        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-            <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li><a href="/">广场</a></li>
-            </ul>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
 
 
-            <% if(userId) { %>
-                <div class="am-topbar-right">
-                    <li class="am-dropdown" data-am-dropdown>
-                        <a class="text-white am-dropdown-toggle am-btn am-btn-primary am-topbar-btn am-btn-sm"
-                           data-am-dropdown-toggle href="javascript:;">
-                            个人中心 <span class="am-icon-caret-down"></span>
-                        </a>
-                        <ul class="am-dropdown-content">
-                            <li><a href="/user/home">个人首页</a></li>
-                            <li><a href="/user/profile">修改资料</a></li>
-                            <li class="am-divider"></li>
-                            <li><a href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a></li>
-                        </ul>
-                    </li>
-                </div>
-            <% } else{ %>
-                <div class="am-topbar-right">
-                    <a href="/user/register" class="text-white am-btn am-btn-primary am-topbar-btn am-btn-sm">注册</a>
-                </div>
-                <div class="am-topbar-right">
-                    <a href="/user/login" class="text-white am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
-                </div>
-            <% } %>
-        </div>
-    </div>
-</header>
 
-<div class="am-g">
-    <div class="col-lg-6 col-md-8 col-sm-centered">
-        <h3>登录</h3>
-        <hr>
-        <form method="post" class="am-form" action="/user/login">
-            <label for="username">账号:</label>
-            <input type="text" name="username" id="username" value="" required>
-            <br>
-            <label for="password">密码:</label>
-            <input type="password" name="password" id="password" value="" required>
-            <br/>
-            <div class="am-cf">
-                <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
-            </div>
-        </form>
-    </div>
-</div>
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="/css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+  <main class="form-signin">
+
+    <form method="post" action="/user/login">
+      <h1 class="h3 mb-3 fw-normal">请登录</h1>
+
+      <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" name='useraccount' placeholder="用户名">
+        <label for="floatingInput">用户名</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" name='password' placeholder="密码">
+        <label for="floatingPassword">密码</label>
+      </div>
+
+      <span>
+        还没有账号？点击此处<a href="/user/register">注册</a>
+      </span>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">登录</button>
+    </form>
+  </main>
+
+
+
+</body>
+
+</html>

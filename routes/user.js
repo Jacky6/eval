@@ -10,14 +10,14 @@ router.get('/login', async (ctx) => {
 });
 
 router.post('/login', async (ctx) => {
-    const {username, password} = ctx.request.body;
-    if (!username || !password) {
+    const {useraccount, password} = ctx.request.body;
+    if (!useraccount || !password) {
         throw new Error('请填写完整!');
     }
-    const user = await userService.login(username, password);
-    ctx.cookies.set('userId', user.id, {
+    const user = await userService.login(useraccount, password);
+    ctx.cookies.set('useraccount', user.useraccount, {
         signed: true,
-        maxAge: 3600 * 24 * 1000
+        maxAge: 24 * 1000,   // cookie 有效时长
     });
     await ctx.redirect('/');
 });
@@ -27,25 +27,26 @@ router.get('/register', async (ctx) => {
 });
 
 router.post('/register', async (ctx) => {
-    const {username, password, confirmPassword} = ctx.request.body;
-    if (!username || !password || !confirmPassword) {
+    const {useraccount, password, confirmPassword} = ctx.request.body;
+    console.log(useraccount, password, confirmPassword);
+    if (!useraccount || !password || !confirmPassword) {
         throw new Error('请填写完整!');
     }
     if (password !== confirmPassword) {
         throw new Error('确认密码不一致');
     }
-    await userService.register(username, password);
+    await userService.register(useraccount, password);
     await ctx.redirect('/user/login');
 });
 
 router.get('/logout', async (ctx) => {
-    ctx.cookies.set('userId', null, {maxAge: 0});
+    ctx.cookies.set('useraccount', '', {maxAge: 0});
     await ctx.redirect('/');
 });
 
 router.get('/home', guard, async (ctx) => {
     const {page = 1, size = 10} = ctx.query;
-    const {rows, count} = await dataService.listByUser(ctx.state.userId, page, size);
+    const {rows, count} = await dataService.listByUser(ctx.state.useraccount, page, size);
     await ctx.render('user/home', {
         list: rows,
         count,
@@ -66,7 +67,7 @@ router.get('/homepage/:id', async (ctx) => {
 });
 
 router.get('/profile', guard, async (ctx) => {
-    const user = await userService.show(ctx.state.userId);
+    const user = await userService.show(ctx.state.useraccount);
     await ctx.render('user/profile', {
         user
     });
@@ -77,7 +78,7 @@ router.post('/profile', guard, async (ctx) => {
     if (!nickname || nickname.length > 20) {
         throw new Error('昵称不合法');
     }
-    await userService.changeProfile(ctx.state.userId, nickname, password);
+    await userService.changeProfile(ctx.state.useraccount, nickname, password);
     await ctx.redirect('/user/home');
 });
 

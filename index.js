@@ -17,7 +17,7 @@ const app = new Koa({
 app.use(errorHandler);
 render(app, { // 使用ejs中间件
     root: './templates', // 模板目录
-    layout: 'main', // 关闭模板布局
+    layout: false, // 关闭模板布局
     viewExt: 'ejs'  // 渲染引擎
 });
 
