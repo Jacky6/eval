@@ -17,7 +17,7 @@ router.post('/login', async (ctx) => {
     const user = await userService.login(useraccount, password);
     ctx.cookies.set('useraccount', user.useraccount, {
         signed: true,
-        maxAge: 24 * 1000,   // cookie 有效时长
+        maxAge: 24 * 1000,   // cookie 有效时长 以秒为单位
     });
     await ctx.redirect('/');
 });
@@ -28,7 +28,6 @@ router.get('/register', async (ctx) => {
 
 router.post('/register', async (ctx) => {
     const {useraccount, password, confirmPassword} = ctx.request.body;
-    console.log(useraccount, password, confirmPassword);
     if (!useraccount || !password || !confirmPassword) {
         throw new Error('请填写完整!');
     }
