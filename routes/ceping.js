@@ -7,7 +7,7 @@ const router = new Router({prefix: '/ceping'});
 
 // 添加或更新测评 （提交一条测评）
 // :todo
-router.post('/update/:dataname', async (ctx) => {
+router.post('/update', guard, async (ctx) => {
     const {dataname, useraccount, comment, index} = ctx.request.body;   // index 是测评结果数组
     await cepingService.publish(dataname, useraccount, comment, index);
     await ctx.redirect('/');

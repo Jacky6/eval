@@ -1,17 +1,139 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= typeof title !== 'undefined' ? `${title} - 微博` : '微博' %></title>
-    <link rel="stylesheet" href="/vendor/amazeui/css/amazeui.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/vendor/amazeui/js/zepto.min.js"></script>
-    <script src="/vendor/amazeui/js/amazeui.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+
+  <title>主观听测平台主页</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
+  <!-- Bootstrap core CSS -->
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .audio-player {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      margin-left: 50px;
+    }
+
+    .btn-group-oneline {
+      margin-bottom: 10px;
+    }
+
+    .btn-group-label {
+      margin-left: 30px;
+      margin-right: 20px;
+      margin-bottom: 10px;
+    }
+
+    .note {
+      margin-left: 50px;
+      margin-top: 10px;
+    }
+
+    .cepingline {
+      margin-top: 10px;
+    }
+  </style>
+
+
 </head>
+
 <body>
+
+  <div class="container">
+    <header
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap" />
+        </svg>
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
+        <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+      </ul>
+
+      <!-- <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-outline-primary me-2"
+          onclick="window.location.href='/user/login'">登录</button>
+        <button type="button" class="btn btn-primary">登出</button>
+      </div> -->
+      <% if(useraccount) { %>
+        <div class="col-md-3 text-end">
+          <button type="button" class="btn btn-outline-primary me-2"
+            onclick="window.location.href='/user/personalInfo'">个人中心</button>
+          <a class="btn btn-outline-primary me-2" href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a>
+        </div>
+        <% } else{ %>
+          <div class="col-md-3 text-end">
+            <% if(!useraccount) { %>
+              <button type="button" class="btn btn-outline-primary me-2"
+                onclick="window.location.href='/user/login'">登录</button>
+              <button type="button" class="btn btn-outline-primary me-2"
+                onclick="window.location.href='/user/register'">注册</button>
+              <% } %>
+          </div>
+          <% } %>
+    </header>
+</div>
+  
 <%- body %>
+
+<footer>
+
+</footer>
+
+
+
+<script src="./js/index.js"></script>
+
+<!-- Libs JS -->
+<script src="./js/apexcharts.min.js" defer></script>
+<!-- Tabler Core -->
+<script src="./js/tabler.min.js" defer></script>
+<script src="./js/demo.min.js" defer></script>
+
+
+<!-- <script type="text/javascript">
+    
+  //   $(document).ready(function() {
+  //     var voice = document.getElementById('voice'); //获取到audio元素
+  //       $('.but').click(function() { //点击文字事件
+  //         if (voice.paused) { //判断音乐是否在播放中，暂停状态
+  //             voice.play(); //音乐播放
+  //             $('.but').text('暂停'); //切换文字
+  //         } else { //播放状态
+  //             voice.pause(); //音乐停止
+  //             $('.but').text('播放'); //切换文字
+  //         }
+  //     });
+  //  });
+  </script> -->
+
+<script>
+  function submitData(data) {
+    console.log(data);
+  }
+</script>
 </body>
+
 </html>

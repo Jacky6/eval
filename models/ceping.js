@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     const evalOpt = allocation.evalOpt;
     const obj = {};
     for(key in evalOpt){
-        obj[evalOpt[key]] = {type: DataTypes.INTEGER, allowNull:false, comment: '指标'};
+        obj[evalOpt[key]] = {type: DataTypes.INTEGER, defaultValue:0, allowNull:true, comment: '指标'};
     }
 
     obj['comment'] = {type: DataTypes.STRING(140), allowNull: true, comment: '评论内容'}

@@ -2,6 +2,7 @@
 const allocation = require('../alloction');
 const sequelize = require('../shared/sequelize');
 const dataService = require('./data');
+const userService = require('./user');
 
 const ceping = sequelize.import('../models/ceping');
 const User = sequelize.import('../models/user');
@@ -9,7 +10,10 @@ const User = sequelize.import('../models/user');
 const evalOpt = allocation.evalOpt;
 
 // 测评一条数据
-exports.publish = async function (dataname, useraccount, comment, index) {
+//:para 
+//dataname:数据名称 useraccount：用户账号
+//obj：字典{indexii:indexi,...,comment:'comment'}
+exports.publish = async function (dataname, useraccount, obj) {
     const targetdata = await dataService.show(dataname);
     if (targetdata === null) {
         console.log(dataname);
@@ -22,12 +26,6 @@ exports.publish = async function (dataname, useraccount, comment, index) {
         throw new Error('用户不存在');
     }
 
-    const obj = {};
-    for(key in evalOpt){
-        obj[evalOpt[key]] = index[key];
-    }
-    obj['comment'] = comment;
-
     const targetcepingid = await ceping.findOne({
         attributes: ['id'], // 指定返回字段
         where:{
@@ -39,9 +37,12 @@ exports.publish = async function (dataname, useraccount, comment, index) {
     if(targetcepingid === null){    // 添加测评结果
         obj['useraccount'] = useraccount;
         obj['dataname'] = dataname;
+        dataService.addevalnum(dataname);
+        userService.addevalnum(useraccount);
         return ceping.create(obj);
     }
     else{//更新测评结果
+        console.log(obj);
         return ceping.update(obj,{
             where:{
                 dataname,

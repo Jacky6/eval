@@ -30,5 +30,13 @@ router.get('/show/:id', async (ctx) => {
     });
 });
 
+//数据页
+router.get('/dataManage', async (ctx) => {
+    await ctx.render('/data/dataManage');
+});
+
+router.get('/dataManage/dataManageDetail', async (ctx) => {
+    await ctx.render('/data/dataManageDetail');
+});
 
 module.exports = router;

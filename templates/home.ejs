@@ -5,14 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.88.1">
-  <title>Album example · Bootstrap v5.1</title>
+
+  <title>主观听测平台主页</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
-
-
-
   <!-- Bootstrap core CSS -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,26 +27,30 @@
       }
     }
 
-    .audio-player{
-        margin-top: 20px;
-        margin-bottom: 10px;
-        margin-left:50px;
-      }
+    .audio-player {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      margin-left: 50px;
+    }
 
-      .btn-group-oneline{
-        margin-bottom: 10px;
-      }
+    .btn-group-oneline {
+      margin-bottom: 10px;
+    }
 
-      .btn-group-label{
-        margin-left: 30px;
-        margin-right: 20px;
-        margin-bottom: 10px;
-      }
+    .btn-group-label {
+      margin-left: 30px;
+      margin-right: 20px;
+      margin-bottom: 10px;
+    }
 
-      .note{
-        margin-left:50px;
-        margin-top: 10px;
-      }
+    .note {
+      margin-left: 50px;
+      margin-top: 10px;
+    }
+
+    .cepingline {
+      margin-top: 10px;
+    }
   </style>
 
 
@@ -69,232 +69,291 @@
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-        <li><a href="/" class="nav-link px-2 link-dark">音频数据</a></li>
+        <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
       </ul>
 
+      <!-- <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-outline-primary me-2"
+          onclick="window.location.href='/user/login'">登录</button>
+        <button type="button" class="btn btn-primary">登出</button>
+      </div> -->
       <% if(useraccount) { %>
         <div class="col-md-3 text-end">
           <button type="button" class="btn btn-outline-primary me-2"
-          onclick="window.location.href='/user/home'">个人中心</button>
+            onclick="window.location.href='/user/personalInfo'">个人中心</button>
           <a class="btn btn-outline-primary me-2" href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a>
         </div>
-    <% } else{ %>
-      <div class="col-md-3 text-end">
-        <% if(!useraccount) { %>
-            <button type="button" class="btn btn-outline-primary me-2"
-          onclick="window.location.href='/user/login'">登录</button>
-            <button type="button" class="btn btn-outline-primary me-2"
-          onclick="window.location.href='/user/register'">注册</button>
-        <% } %>
-      </div>
-    <% } %>
+        <% } else{ %>
+          <div class="col-md-3 text-end">
+            <% if(!useraccount) { %>
+              <button type="button" class="btn btn-outline-primary me-2"
+                onclick="window.location.href='/user/login'">登录</button>
+              <button type="button" class="btn btn-outline-primary me-2"
+                onclick="window.location.href='/user/register'">注册</button>
+              <% } %>
+          </div>
+          <% } %>
     </header>
+</div>
+<main>
+  <div class="text-center container">
+    <div class="row">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h2 class="fw-light">主观听测平台</h1>
+          <p class="lead text-muted">点击下方语音播放，根据语音质量评分（1~5分），简要描述对该语音的评价，完成后点击提交</p>
+
+      </div>
+    </div>
   </div>
 
-  <main>
-    <section class="py-5 text-center container">
-      <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light">主观听测平台</h1>
-          <p class="lead text-muted">点击下方语音播放，根据语音质量评分后提交</p>
+    <div class="container" style="margin-bottom:50px;">
+      <!-- 打分块 -->
+      <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-4 col-sm-1 col-sx-1 align-self-center"
+          style="background-color: #55595c; padding: 20px;">
+
+          <!--#55595c -->
+          <div class="row">
+            <script>
+              var dataname = '<%= dataname %>'
+            </script>
+            <div class="row justify-content-center">
+              <div class="col-12 text-white" style="margin-bottom: 10px;">
+              文件名称：<%= dataname %>
+              </div>
+            </div>
+
+            <div class="row">
+            <!-- 音频文件在这儿渲染 -->
+              <audio src="<%= datapath %>" controls="controls"></audio>
+            </div>
+          </div>
+
+          <!-- 一组评分 -->
+          <form method="post" action="/"
+            style="background-color: white; border-radius: 4%; padding: 5px; margin-top: 10px;">
+            <div id="cepingbox">
+
+              <!-- 对指标数组循环 -->
+              <script type="text/javascript">
+                var ceping_arr = ['语言连续度', '语音清晰度', '语音失真度', '背景噪音消除效果', '回声消除效果'];
+                var name_arr = ['index1', 'index2', 'index3', 'index4', 'index5']
+                var list_str = '';
+                var index = 0;
+                ceping_arr.forEach(item => {
+                  list_str += `
+                  <div class="row justify-content-center cepingline" >
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                      <text class="btn-group-label">${item}</text>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-4" >
+                        <input style="width: 50px;" type="number" name=${name_arr[index]} id="" value=0>
+                        </div>
+                      </div>
+                  `
+                  index += 1;
+                })
+                document.write(list_str);
+              </script>
+            </div>
+
+            <div class="row justify-content-center" style="margin-top: 20px;">
+              <div class="col-lg-10 col-md-11 col-11 align-self-center">
+                <textarea name="comment" id="" style="width: 100%;" rows="3" placeholder="请简要输入对该语音的评价"></textarea>
+              </div>
+            </div>
+
+            <div class="row justify-content-end" style="margin-top: 10px;">
+              <div class="col-lg-3 col-md-3 col-3">
+                <button type="submit" name="submitRate" class="btn btn-default text-white"
+                  style="background-color: #55595c;">提交</button>
+              </div>
+            </div>
+
+          </form>
         </div>
       </div>
-    </section>
+    </div>
+    <div class="text-center container">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h2 class="fw-light">评价指标介绍</h1>
 
-    <div class="album py-5 bg-light">
-      <div class="container">
+        </div>
+      </div>
+    </div>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="container-xl">
+      <div class="row row-cards">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table table-vcenter card-table table-striped">
+                <thead>
+                  <tr>
+                    <th>指标</th>
+                    <th>得分</th>
+                    <th>描述</th>
+                    <th class="w-1"></th>
+                  </tr>
+                </thead>
+
+                <!-- 循环创建表格 -->
+                <tbody>
+                  <script type="text/javascript">
+                    var ceping_arr = ['语言连续度', '语音清晰度', '语音失真度', '背景噪音消除效果', '回声消除效果'];
+                    var score_des_arr = ['音频主观效果非常差，体验过程中存在非常大的问题，用户非常反感，不想继续使用。',
+                      '音频主观效果较差，体验过程中存在较大问题，用户感觉不舒服，已经影响正常使用；',
+                      '音频主观效果一般，体验过程存在轻微问题，用户可以接受，不会影响用户使用：',
+                      '音频主观效果比较好，体验过程中声音非常清晰，无明显问题，需仔细聆听才可以发现，用户整体听感比较舒服；',
+                      '音频主观效果非常好，体验过程中声音非常清晰，无任何问题，用户整体听感非常舒服；']
+                    var ceping_des_arr = ['(评价语音是否有丢失)', '(评价语音内容是否能听清)', '(评价语音听感是否失真)',
+                      '(评价噪声是否消除干净，残留程度)', '(评价是否能听到回声，以及回声的大小)']
+                    var audio_arr = []
+                    var list_str = '';
+                    var group_index = 0;
+                    var index = 0;
+                    ceping_arr.forEach(item => {
+                      // 第一行和第二行特殊处理，因为含有指标名称
+                      list_str += `
+                      <tr style="border-top-width: 3px;">
+                        <td>${item}</td>
+                        <td class="text-muted">
+                          1
+                        </td>
+                        <td class="text-muted">
+                            ${score_des_arr[0]}
+                        </td>
+                        <td>
+                        <audio src="example\\1.wav" id="${"audio_" + index}"></audio>
+                        <span style="width: 100%;text-align: center; color: blue;">
+                          <span class="audio_text" style="cursor: pointer;" id="${"start_" + index}" onclick='play_audio("${index}")'>播放</span>
+                        </span>
+                      </td>
+                      </tr>
+                      `
+                      index += 1
+
+                      // 第二行
+                      list_str += `
+                        <tr>
+                        <td class="text-muted">
+                          ${ceping_des_arr[group_index]}
+                        </td>
+                        <td class="text-muted">
+                          2
+                        </td>
+                        <td class="text-muted">
+                          ${score_des_arr[1]}
+                        </td>
+                        <td>
+                          <audio src="example\\1.wav" id="${"audio_" + index}"></audio>
+                        <span style="width: 100%;text-align: center; color: blue;">
+                          <span class="audio_text" style="cursor: pointer;" id="${"start_" + index}" onclick='play_audio("${index}")'>播放</span>
+                        </span>
+                        </td>
+                      </tr >
+                        `
+                      index += 1
+
+                      // 第三行到第五行
+                      for (var i = 2; i <= 4; i++) {
+                        list_str += `
+                          <tr>
+                          <td></td>
+                          <td class="text-muted">
+                            ${i + 1}
+                          </td>
+                          <td class="text-muted">
+                            ${score_des_arr[i]}
+                          </td>
+                          <td>
+                            <audio src="example\\1.wav" id="${"audio_" + index}"></audio>
+                        <span style="width: 100%;text-align: center; color: blue;">
+                          <span class="audio_text" style="cursor: pointer;" id="${"start_" + index}" onclick='play_audio("${index}")'>播放</span>
+                        </span>
+                          </td>
+                        </tr >
+                        `
+
+                        index += 1
+                      }
+
+                      group_index += 1
+
+                    })
+                    console.log(list_str)
+                    document.write(list_str)
+                  </script>
+                </tbody>
 
 
-          <div class="col">
-            <div class="card shadow-sm">
-              <!-- 上半部分 -->
-              <div style="background-color: #55595c;">
-                <!--#55595c -->
-                <audio class="audio-player" src="data\1.wav" controls="controls"></audio>
-                <!-- 评分按钮 -->
-                <div class="form-group">
-                  <!-- 一组评分 -->
-                  <div class="btn-group-oneline">
-                    <text class="btn-group-label text-white">可懂度</text>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">1</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">2</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">3</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">4</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">5</button>
-                    </div>
-                  </div>
-
-                  <div class="btn-group-oneline">
-                    <text class="btn-group-label text-white">清晰度</text>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">1</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">2</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">3</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">4</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">5</button>
-                    </div>
-                  </div>
-
-                  <div class="btn-group-oneline">
-                    <text class="btn-group-label text-white">流畅度</text>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">1</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">2</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">3</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">4</button>
-                      <button type="button" class="btn btn-light btn-outline-dark" style="width: 50px;">5</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card-body">
-                <textarea name="" id="" cols="30" rows="3" class="note" placeholder="请简要输入对该语音的评价"></textarea>
-
-                <div class="d-flex justify-content-end align-items-center">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">提交</button>
-                </div>
-              </div>
+              </table>
             </div>
           </div>
-
-
-
-          <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em">Thumbnail</text>
-              </svg>
-
-              <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <small class="text-muted">9 mins</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em">Thumbnail</text>
-              </svg>
-
-              <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <small class="text-muted">9 mins</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em">Thumbnail</text>
-              </svg>
-
-              <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <small class="text-muted">9 mins</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em">Thumbnail</text>
-              </svg>
-
-              <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <small class="text-muted">9 mins</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em">Thumbnail</text>
-              </svg>
-
-              <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <small class="text-muted">9 mins</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
 
   </main>
-  <footer class="text-muted py-5">
-    <div class="container">
-      <p class="float-end mb-1">
-        <a href="#">Back to top</a>
-      </p>
-      <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-      <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-          href="../getting-started/introduction/">getting started guide</a>.</p>
-    </div>
+  <footer>
+
   </footer>
 
 
-  <script src="./index.js"></script>
+
+  <script src="./js/index.js"></script>
+
+  <!-- Libs JS -->
+  <script src="./js/apexcharts.min.js" defer></script>
+  <!-- Tabler Core -->
+  <script src="./js/tabler.min.js" defer></script>
+  <script src="./js/demo.min.js" defer></script>
 
 
+  <script type="text/javascript">
+    function play_audio(id) {
+
+
+      // 如果当前音频未播放，播放音频，并修改为暂停
+      var text = document.getElementById("start_" + id)
+      if (text.innerHTML == "播放") {
+
+        // 修改所有标签为播放
+        for (let i = 0; i < 25; i++) {
+          document.getElementById("start_" + i).innerHTML = "播放"
+        }
+        text.innerHTML = "暂停"
+
+        // 除了当前音频外，暂停其他所有的
+        let audios = document.getElementsByTagName('audio');
+        for (let i = 0; i < audios.length; i++) {
+          if (i !== id) {
+            audios[i].pause();
+          }
+        }
+
+        // 播放当前音频
+        var audio_player = document.getElementById("audio_" + id)
+        console.log(audio_player)
+        audio_player.play()
+
+      } else {
+        text.innerHTML = "播放"
+
+        var audio_player = document.getElementById("audio_" + id)
+        console.log(audio_player)
+        audio_player.pause()
+      }
+
+    }
+
+
+  </script>
+
+
+
+  </script>
 </body>
 
 </html>

@@ -37,3 +37,25 @@ exports.show = function (useraccount) {
 exports.changeProfile = function (useraccount, nickname, password) {
     return User.update({nickname, password: password || ''}, {where: {useraccount: useraccount}, individualHooks: true});
 };
+
+//  用户测评数目加一
+exports.addevalnum = async function (useraccount){
+    const targetuser = await User.findOne({
+        where:{
+            useraccount,
+        }
+    });
+    targetuser.evalnum = targetuser.evalnum + 1;
+    return await targetuser.save();
+}
+
+//  用户测评数目减一
+exports.delevalnum = async function (useraccount){
+    const targetuser = await User.findOne({
+        where:{
+            useraccount,
+        }
+    });
+    targetuser.evalnum = targetuser.evalnum - 1;
+    return await targetuser.save();
+}

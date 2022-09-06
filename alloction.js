@@ -1,7 +1,7 @@
 // 自定义全局参数
 
 // 评估指标
-exports.evalOpt = ['index1','index2','index3'];
+exports.evalOpt = ['index1','index2','index3','index4','index5'];
 
 // 待评估数据库
 exports.dbname = 'data'

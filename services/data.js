@@ -29,5 +29,33 @@ exports.list = async function (page = 1, size = 10) {
     });
 };
 
+// 首页随机一条数据
+exports.randone = async function () {
+    return await data.findOne({
+        attributes: ['dataname','datapath'],
+        order: [sequelize.literal('rand()')]
+    });
+};
 
+//  数据被测评数目加一
+exports.addevalnum = async function (dataname){
+    const targetdata = await data.findOne({
+        where:{
+            dataname,
+        }
+    });
+    targetdata.evalnum = targetdata.evalnum + 1;
+    return await targetdata.save();
+}
+
+//  数据被测评数目减一
+exports.delevalnum = async function (dataname){
+    const targetdata = await data.findOne({
+        where:{
+            dataname,
+        }
+    });
+    targetdata.evalnum = targetdata.evalnum - 1;
+    return await targetdata.save();
+}
 

@@ -25,7 +25,9 @@ async function PushData() {
     datapath = dataname.map( filename => {
         return path.join(dbpath,filename);
     }).filter(isFile);
-
+    for(key in datapath){
+        datapath[key] = datapath[key].replace('public\\','')
+    }
     obj = [];
     for (key in datapath) {
         obj[key] = {'dataname': dataname[key],

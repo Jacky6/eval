@@ -17,7 +17,7 @@ router.post('/login', async (ctx) => {
     const user = await userService.login(useraccount, password);
     ctx.cookies.set('useraccount', user.useraccount, {
         signed: true,
-        maxAge: 24 * 1000,   // cookie 有效时长 以秒为单位
+        maxAge: 3600 * 24 * 1000,   // cookie 有效时长
     });
     await ctx.redirect('/');
 });
@@ -41,6 +41,10 @@ router.post('/register', async (ctx) => {
 router.get('/logout', async (ctx) => {
     ctx.cookies.set('useraccount', '', {maxAge: 0});
     await ctx.redirect('/');
+});
+
+router.get('/personalInfo', async (ctx) => {
+    await ctx.render('/user/personalInfo');
 });
 
 router.get('/home', guard, async (ctx) => {
