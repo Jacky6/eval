@@ -35,7 +35,9 @@ router.get('/dataManage', async (ctx) => {
     await ctx.render('/data/dataManage');
 });
 
-router.get('/dataManage/dataManageDetail', async (ctx) => {
+
+
+router.get('/dataManageDetail', async (ctx) => {
     await ctx.render('/data/dataManageDetail');
 });
 

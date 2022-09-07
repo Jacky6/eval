@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>Dashboard Template · Bootstrap v5.1</title>
+    <title>数据管理平台</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
 
@@ -39,6 +39,8 @@
     <link href="/css/tabler-payments.min.css" rel="stylesheet" />
     <link href="/css/tabler-vendors.min.css" rel="stylesheet" />
     <link href="/css/demo.min.css" rel="stylesheet" />
+    <link href="/css/tabler.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -65,7 +67,7 @@
             <% if(useraccount) { %>
                 <div class="col-md-3 text-end">
                     <button type="button" class="btn btn-outline-primary me-2"
-                        onclick="window.location.href='/personalInfo'">个人中心</button>
+                        onclick="window.location.href='/user/personalInfo'">个人中心</button>
                     <a class="btn btn-outline-primary me-2" href="/user/logout"
                         onclick="return confirm('确定退出吗?')">退出登录</a>
                 </div>
@@ -106,20 +108,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            A
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">Overview</a></li>
-                                <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                                <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                                <li><a href="#" class="link-dark rounded">Annually</a></li>
-                            </ul>
-                        </div>
-                    </li>
 
                 </ul>
                 </a>
@@ -130,8 +118,8 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Voicebank</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
+                    <h1 class="h2">竞品A数据集</h1>
+                    <!-- <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
@@ -140,10 +128,49 @@
                             <span data-feather="calendar"></span>
                             This week
                         </button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+                <!-- 基本数据展示 -->
+                <div class="row justify-content-center" style="margin-bottom: 10px;">
+                    <!-- 共完成 -->
+                    <div class="col-lg-3">
+                        <div class="card top-card">
+                            <div class="card-header" style="background-color: #55595c; ">
+                                <div class="top-card-title">
+                                    总条数
+                                </div>
+                            </div>
+                            <div class="card-body" style="text-align:center">
+                                <span>
+                                    <span style="font-size: 40px; color: #008FFB; font-weight: 400;">
+                                        1192
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 今日已完成 -->
+                    <div class="col-lg-3">
+                        <div class="card top-card">
+                            <div class="card-header" style="background-color: #55595c; ">
+                                <div class="top-card-title">
+                                    总测评次数
+                                </div>
+                            </div>
+                            <div class="card-body" style="text-align:center">
+                                <span>
+                                    <span style="font-size: 40px; color: #008FFB; font-weight: 400;">
+                                        1121
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="col-lg-6 col-xl-4">
                     <div class="card">
@@ -153,47 +180,90 @@
                     </div>
                 </div>
 
-                <h2>数据列表</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">文件名</th>
-                                <th scope="col">数据集</th>
-                                <th scope="col">总评分次数</th>
-                                <th scope="col">总平均分</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1,001</td>
-                                <td>random</td>
-                                <td>VoiceBANK</td>
-                                <td>100</td>
-                                <td>3.3</td>
-                                <td><a href="./dataManageDetail.html">详细信息</a></td>
-                            </tr>
-                            <tr>
-                                <td>1,002</td>
-                                <td>placeholder</td>
-                                <td>VoiceBANK</td>
-                                <td>80</td>
-                                <td>5.4</td>
-                                <td><a href="./dataManageDetail.html">详细信息</a></td>
-                            </tr>
-                            <tr>
-                                <td>1,003</td>
-                                <td>data</td>
-                                <td>VoiceBANK</td>
-                                <td>9</td>
-                                <td>9.7</td>
-                                <td><a href="./dataManageDetail.html">详细信息</a></td>
-                            </tr>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div style="margin: 15px;">
+                    <h2>数据列表</h2>
+                </div>
+
+                <div class="row">
+                    <div class="container-xl">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="table-default" class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th><button class="table-sort" data-sort="sort-id">ID</button></th>
+                                                <th><button class="table-sort" data-sort="sort-name">文件名</button></th>
+                                                <th><button class="table-sort" data-sort="sort-num">总测评次数</button></th>
+                                                <th><button class="table-sort" data-sort="sort-index1">语言连续度</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index2">语音清晰度</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index3">语音失真度</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index4">背景噪音消除效果</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index5">回声消除效果</button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-tbody">
+                                            <script>
+                                                var record_data = [
+                                                    {
+                                                        "index1": 1,
+                                                        "index2": 1,
+                                                        "index3": 1,
+                                                        "index4": 0,
+                                                        "index5": 0,
+                                                        "evalnum": 20,
+                                                        "dataname": "1 copy.wav"
+                                                    },
+                                                    {
+                                                        "index1": 0,
+                                                        "index2": 0,
+                                                        "index3": 0,
+                                                        "index4": 4.5,
+                                                        "index5": 0,
+                                                        "evalnum": 100,
+                                                        "dataname": "1 copy 3.wav"
+                                                    },
+                                                    {
+                                                        "index1": 1,
+                                                        "index2": 3,
+                                                        "index3": 4,
+                                                        "index4": 4.5,
+                                                        "index5": 2,
+                                                        "evalnum": 10,
+                                                        "dataname": "1.wav"
+                                                    }
+                                                ]
+                                                var list_str = '';
+                                                var index = 1;
+
+                                                record_data.forEach(item => {
+                                                    list_str += `
+                                                    <tr>
+                                                        <td class="sort-id">${index}</td>
+                                                        <td class="sort-name"><a href="/data/dataManageDetail">${item.dataname}</a></td>
+                                                        <td class="sort-num">${item.evalnum}</td>
+                                                        <td class="sort-index1">${item.index1}</td>
+                                                        <td class="sort-index2">${item.index2}</td>
+                                                        <td class="sort-index3">${item.index3}</td>
+                                                        <td class="sort-index4">${item.index4}</td>
+                                                        <td class="sort-index5">${item.index5}</td>
+                                                    </tr>
+                                                     `
+                                                    index += 1
+                                                })
+                                                document.write(list_str)
+                                            </script>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
@@ -211,10 +281,11 @@
     <script src="./js/dataManage.js"></script>
 
     <!-- Libs JS -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="/js/list.min.js" defer></script>
+    <script src="/js/apexcharts.min.js"></script>
     <!-- Tabler Core -->
-    <script src="./js/tabler.min.js" defer></script>
-    <script src="./js/demo.min.js" defer></script>
+    <script src="/js/tabler.min.js" defer></script>
+    <script src="/js/demo.min.js" defer></script>
 
     <script>
         // @formatter:off
@@ -279,6 +350,18 @@
       // @formatter:on
     </script>
 
+        <!-- 表格排序 -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const list = new List('table-default', {
+                    sortClass: 'table-sort',
+                    listClass: 'table-tbody',
+                    valueNames: ['sort-id', 'sort-name', 'sort-num', 'sort-index1', 'sort-index2', 'sort-index3', 'sort-index4', 'sort-index5',
+                        
+                    ]
+                });
+            })
+        </script>
 </body>
 
 </html>

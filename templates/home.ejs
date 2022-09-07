@@ -51,12 +51,57 @@
     .cepingline {
       margin-top: 10px;
     }
+
+
+    .header-title :hover{
+      background-color: lightgray;
+    }
   </style>
 
 
 </head>
 
 <body>
+  <!-- <header style="margin-top:30px; margin-bottom: 30px;">
+    <div class="container">
+      <div class="row  justify-content-center align-items-center">
+        <div class="col-lg-3">
+          <h1 class="fw-light">
+            主观听测平台
+          </h1>
+        </div>
+        <div class="col-lg-6">
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center" >
+            <li><a href="/" class="nav-link link-dark header-title"><h4>主页</h4>
+            </a></li>
+            <li><a href="/data/dataManage" class="nav-link header-title link-secondary"><h4>音频数据</h4></a></li>
+          </ul>
+        </div>
+
+        <% if(useraccount) { %>
+          <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2"
+              onclick="window.location.href='/user/personalInfo'">个人中心</button>
+            <a class="btn btn-outline-primary me-2" href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a>
+          </div>
+          <% } else{ %>
+            <div class="col-md-3 text-end">
+              <% if(!useraccount) { %>
+                <button type="button" class="btn btn-outline-primary me-2"
+                  onclick="window.location.href='/user/login'">登录</button>
+                <button type="button" class="btn btn-outline-primary me-2"
+                  onclick="window.location.href='/user/register'">注册</button>
+                <% } %>
+            </div>
+            <% } %>
+      </div>
+    </div>
+
+    <HR style= " FILTER: alpha (opacity = 100, finishopacity =0 , style= 3 )" width ="100%" color =#987 cb 9 SIZE = 3>
+
+
+  </header> -->
+
 
   <div class="container">
     <header
@@ -67,16 +112,12 @@
         </svg>
       </a>
 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-        <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
-      </ul>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
+          <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+        </ul>
 
-      <!-- <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2"
-          onclick="window.location.href='/user/login'">登录</button>
-        <button type="button" class="btn btn-primary">登出</button>
-      </div> -->
+
       <% if(useraccount) { %>
         <div class="col-md-3 text-end">
           <button type="button" class="btn btn-outline-primary me-2"
@@ -94,7 +135,7 @@
           </div>
           <% } %>
     </header>
-</div>
+</div> 
 <main>
   <div class="text-center container">
     <div class="row">

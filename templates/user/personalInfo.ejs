@@ -5,10 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>个人中心</title>
 
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/dataManage.css" rel="stylesheet">
+    <link href="/css/tabler.min.css" rel="stylesheet" />
+    <link href="/css/tabler-flags.min.css" rel="stylesheet" />
+    <link href="/css/tabler-payments.min.css" rel="stylesheet" />
+    <link href="/css/tabler-vendors.min.css" rel="stylesheet" />
+    <link href="/css/demo.min.css" rel="stylesheet" />
+
+    <style>
+        .top-card {
+            border-radius: 3%;
+            border-width: 2px;
+            border-color: black;
+        }
+
+        .top-card-title {
+            font-size: 20px;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +43,7 @@
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-                <li><a href="/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+                <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
             </ul>
 
             <!-- <div class="col-md-3 text-end">
@@ -32,10 +51,11 @@
             onclick="window.location.href='/user/login'">登录</button>
           <button type="button" class="btn btn-primary">登出</button>
         </div> -->
+
             <% if(useraccount) { %>
                 <div class="col-md-3 text-end">
                     <button type="button" class="btn btn-outline-primary me-2"
-                        onclick="window.location.href='/personalInfo'">个人中心</button>
+                        onclick="window.location.href='/user/personalInfo'">个人中心</button>
                     <a class="btn btn-outline-primary me-2" href="/user/logout"
                         onclick="return confirm('确定退出吗?')">退出登录</a>
                 </div>
@@ -71,22 +91,8 @@
                         </button>
                         <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">VoiceBANK</a></li>
+                                <li><a href="#" class="link-dark rounded">竞品A</a></li>
                                 <li><a href="#" class="link-dark rounded">Librispeech</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            A
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">Overview</a></li>
-                                <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                                <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                                <li><a href="#" class="link-dark rounded">Annually</a></li>
                             </ul>
                         </div>
                     </li>
@@ -96,213 +102,167 @@
 
 
             </nav>
-            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="background-color: red;">
-                <div class="row" style="background-color: blue;">
-                    <div class="col-md-6" style="background-color: yellow;">
-                        <div class="card">
+
+            <!-- 表格展示部分 -->
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <!-- 基本数据展示 -->
+                <div class="row justify-content-center" style="margin-bottom: 10px;">
+                    <!-- 共完成 -->
+                    <div class="col-lg-3">
+                        <div class="card top-card">
+                            <div class="card-header" style="background-color: #55595c; ">
+                                <div class="top-card-title">
+                                    当前共完成
+                                </div>
+                            </div>
+                            <div class="card-body" style="text-align:center">
+                                <span>
+                                    <span style="font-size: 40px; color: #008FFB; font-weight: 400;">
+                                        1192
+                                    </span>
+                                    <span style="font-size: 40px; font-weight: 600;">
+                                        /
+                                    </span>
+                                    <span style="font-size: 40px; color: green; font-weight: 600;">
+                                        2231
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 今日已完成 -->
+                    <div class="col-lg-3">
+                        <div class="card top-card">
+                            <div class="card-header" style="background-color: #55595c; ">
+                                <div class="top-card-title">
+                                    今日已完成
+                                </div>
+                            </div>
+                            <div class="card-body" style="text-align:center">
+                                <span>
+                                    <span style="font-size: 40px; color: #008FFB; font-weight: 400;">
+                                        11
+                                    </span>
+                                    <span style="font-size: 40px; font-weight: 600;">
+                                        条
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 详细信息展示 -->
+                <div class="row">
+                    <!-- 每日完成情况 -->
+                    <div class="col-md-4">
+                        <div class="card top-card">
                             <div class="card-body">
                                 <div id="chart-completion-tasks-2"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6" style="background-color: green;">
-                        <div class="card">
+
+                    <!-- 数据分数分布 -->
+                    <div class="col-md-4">
+                        <div class="card top-card">
                             <div class="card-body">
-                                <div id="chart-completion-tasks"></div>
+                                <div id="chart-data-lianxu-distri"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card top-card">
+                            <div class="card-body">
+                                <div id="chart-data-qingxi-distri"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
                 <div class="row">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Invoices</h3>
-                        </div>
-                        <div class="card-body border-bottom py-3">
-                            <div class="d-flex">
-                                <div class="text-muted">
-                                    Show
-                                    <div class="mx-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" value="8" size="3"
-                                            aria-label="Invoices count">
-                                    </div>
-                                    entries
-                                </div>
-                                <div class="ms-auto text-muted">
-                                    Search:
-                                    <div class="ms-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm"
-                                            aria-label="Search invoice">
-                                    </div>
+                    <div class="container-xl">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="table-default" class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th><button class="table-sort" data-sort="sort-id">ID</button></th>
+                                                <th><button class="table-sort" data-sort="sort-name">文件名</button></th>
+                                                <th><button class="table-sort" data-sort="sort-date">创建日期</button></th>
+                                                <th><button class="table-sort" data-sort="sort-index1">语言连续度</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index2">语音清晰度</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index3">语音失真度</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index4">背景噪音消除效果</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-index5">回声消除效果</button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-tbody">
+                                            <script>
+                                                var record_data = [
+                                                    {
+                                                        "index1": 1,
+                                                        "index2": 1,
+                                                        "index3": 1,
+                                                        "index4": 0,
+                                                        "index5": 0,
+                                                        "updated_at": "6/9/2022 11:12:22",
+                                                        "dataname": "1 copy.wav"
+                                                    },
+                                                    {
+                                                        "index1": 0,
+                                                        "index2": 0,
+                                                        "index3": 0,
+                                                        "index4": 4.5,
+                                                        "index5": 0,
+                                                        "updated_at": "6/9/2022 15:26:43",
+                                                        "dataname": "1 copy 3.wav"
+                                                    }
+                                                ]
+                                                var list_str = '';
+                                                var index = 1;
+
+                                                record_data.forEach(item => {
+                                                    var update_data_str = item.updated_at
+                                                    var day = update_data_str.split("/")[0]
+                                                    var month = update_data_str.split("/")[1]
+                                                    var year = update_data_str.split("/")[2].split(" ")[0]
+                                                    var time = update_data_str.split("/")[2].split(" ")[1]
+                                                    // console.log(day, month, year)
+                                                    var date_str = year + '-' + month + '-' + day + ' ' + time
+                                                    // console.log(date_str)
+                                                    var date = new Date(date_str)
+                                                    var timestamp = Date.parse(date)
+                                                    // console.log(timestamp)
+                                                    list_str += `
+                                                    <tr>
+                                                        <td class="sort-id">${index}</td>
+                                                        <td class="sort-name">${item.dataname}</td>
+                                                        <td class="sort-date" data-date=${timestamp}">${item.updated_at}</td>
+                                                        <td class="sort-index1">${item.index1}</td>
+                                                        <td class="sort-index2">${item.index2}</td>
+                                                        <td class="sort-index3">${item.index3}</td>
+                                                        <td class="sort-index4">${item.index4}</td>
+                                                        <td class="sort-index5">${item.index5}</td>
+                                                    </tr>
+                                                     `
+                                                    index += 1
+                                                })
+                                                document.write(list_str)
+                                            </script>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table card-table table-vcenter text-nowrap datatable">
-                                <thead>
-                                    <tr>
-                                        <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select all invoices"></th>
-                                        <th class="w-1">No.
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
-                                        </th>
-                                        <th>文件名</th>
-                                        <th>可懂度</th>
-                                        <th>流畅度</th>
-                                        <th>清晰度</th>
-                                        <th>总平均</th>
-                                        <th>更新时间</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-muted">001401</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Design Works</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-country-us"></span>
-                                            Carlson Limited
-                                        </td>
-                                        <td>
-                                            87956621
-                                        </td>
-                                        <td>
-                                            15 Dec 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success me-1"></span> Paid
-                                        </td>
-                                        <td>$887</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport"
-                                                    data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-muted">001402</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">UX Wireframes</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-country-gb"></span>
-                                            Adobe
-                                        </td>
-                                        <td>
-                                            87956421
-                                        </td>
-                                        <td>
-                                            12 Apr 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning me-1"></span> Pending
-                                        </td>
-                                        <td>$1200</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport"
-                                                    data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-muted">001403</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">New Dashboard</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-country-de"></span>
-                                            Bluewolf
-                                        </td>
-                                        <td>
-                                            87952621
-                                        </td>
-                                        <td>
-                                            23 Oct 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning me-1"></span> Pending
-                                        </td>
-                                        <td>$534</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport"
-                                                    data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- 下方的更换 -->
-                        <div class="card-footer d-flex align-items-center">
-                            <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span>
-                                entries</p>
-                            <ul class="pagination m-0 ms-auto">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <polyline points="15 6 9 12 15 18" />
-                                        </svg>
-                                        prev
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        next
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <polyline points="9 6 15 12 9 18" />
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -311,15 +271,27 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- Libs JS -->
+    <script src="/js/apexcharts.min.js"></script>
+    <script src="/js/list.min.js" defer></script>
+
+    <!-- Own Js -->
+    <script src="/js/dataManage.js"></script>
+
+
     <!-- Tabler Core -->
-    <script src="./js/tabler.min.js" defer></script>
-    <script src="./js/demo.min.js" defer></script>
-    <script src="./js/dataManage.js"></script>
+    <script src="/js/tabler.min.js" defer></script>
+    <script src="/js/demo.min.js" defer></script>
+
     <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function () {
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-2'), {
+                title: {
+                    text: "每日完成情况",
+                    align: 'center',
+                    margin: 10
+                },
                 chart: {
                     type: "line",
                     fontFamily: 'inherit',
@@ -328,9 +300,9 @@
                     toolbar: {
                         show: false,
                     },
-                    animations: {
-                        enabled: false
-                    },
+                    // animations: {
+                    //     enabled: false
+                    // },
                 },
                 fill: {
                     opacity: 1,
@@ -341,8 +313,8 @@
                     curve: "smooth",
                 },
                 series: [{
-                    name: "Tasks completion",
-                    data: [155, 65, 465, 265, 225, 325, 80]
+                    name: "完成条数",
+                    data: [23, 2, 33, 12, 24, 5, 1]
                 }],
                 grid: {
                     padding: {
@@ -368,7 +340,7 @@
                     },
                 },
                 labels: [
-                    '2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26'
+                    '2022-09-01', '2022-09-02', '2022-09-03', '2022-09-04', '2022-09-05', '2022-09-06', '2022-09-07'
                 ],
                 // colors: [tabler.getColor("primary")],
                 legend: {
@@ -378,6 +350,153 @@
         });
         // @formatter:on
     </script>
+
+    <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function () {
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-data-lianxu-distri'), {
+                title: {
+                    text: "语言连续度评分分布情况",
+                    align: 'center',
+                    margin: 10
+                },
+                chart: {
+                    type: "bar",
+                    fontFamily: 'inherit',
+                    height: 240,
+                    parentHeightOffset: 0,
+                    toolbar: {
+                        show: false,
+                    },
+                    // animations: {
+                    //     enabled: false
+                    // },
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: '50%',
+                    }
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                fill: {
+                    opacity: 1,
+                },
+                series: [{
+                    name: "数量",
+                    data: [155, 65, 465, 265, 225, 325, 80, 122]
+                }],
+                grid: {
+                    padding: {
+                        top: -20,
+                        right: 0,
+                        left: -4,
+                        bottom: -4
+                    },
+                    strokeDashArray: 4,
+                },
+                xaxis: {
+                    labels: {
+                        padding: 0,
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    axisBorder: {
+                        show: false,
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        padding: 4
+                    },
+                },
+                labels: [
+                    '1~1.5', '1.51~2', '2~2.5', '2.51~3', '3.01~3.5', '3.51~4', '4.01~4.5', '4.51~5', 
+                ],
+                // colors: [tabler.getColor("primary")],
+                legend: {
+                    show: false,
+                },
+            })).render();
+        });
+    // @formatter:on
+    </script>
+
+<script>
+    // @formatter:off
+    document.addEventListener("DOMContentLoaded", function () {
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-data-qingxi-distri'), {
+            title: {
+                text: "语言连续度评分分布情况",
+                align: 'center',
+                margin: 10
+            },
+            chart: {
+                type: "bar",
+                fontFamily: 'inherit',
+                height: 240,
+                parentHeightOffset: 0,
+                toolbar: {
+                    show: false,
+                },
+                // animations: {
+                //     enabled: false
+                // },
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '50%',
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: "数量",
+                data: [155, 65, 465, 265, 225, 325, 80, 122]
+            }],
+            grid: {
+                padding: {
+                    top: -20,
+                    right: 0,
+                    left: -4,
+                    bottom: -4
+                },
+                strokeDashArray: 4,
+            },
+            xaxis: {
+                labels: {
+                    padding: 0,
+                },
+                tooltip: {
+                    enabled: false
+                },
+                axisBorder: {
+                    show: false,
+                },
+            },
+            yaxis: {
+                labels: {
+                    padding: 4
+                },
+            },
+            labels: [
+                '1~1.5', '1.51~2', '2~2.5', '2.51~3', '3.01~3.5', '3.51~4', '4.01~4.5', '4.51~5', 
+            ],
+            // colors: [tabler.getColor("primary")],
+            legend: {
+                show: false,
+            },
+        })).render();
+    });
+// @formatter:on
+</script>
+
 
     <script>
         // @formatter:off
@@ -446,6 +565,19 @@
             })).render();
         });
     // @formatter:on
+    </script>
+
+    <!-- 表格排序 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const list = new List('table-default', {
+                sortClass: 'table-sort',
+                listClass: 'table-tbody',
+                valueNames: ['sort-id', 'sort-name', 'sort-index1', 'sort-index2', 'sort-index3', 'sort-index4', 'sort-index5',
+                    { attr: 'data-date', name: 'sort-date' },
+                ]
+            });
+        })
     </script>
 </body>
 

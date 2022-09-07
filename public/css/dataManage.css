@@ -167,3 +167,14 @@ body {
 .lh-tight {
   line-height: 1.25;
 }
+
+.top-card {
+  border-radius: 3%;
+  border-width: 2px;
+  border-color: black;
+}
+
+.top-card-title {
+  font-size: 20px;
+  color: white;
+}
