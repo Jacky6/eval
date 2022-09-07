@@ -7,7 +7,7 @@ const dataService = require('../services/data');
 const cepingService = require('../services/ceping');
 
 router.get('/', async (ctx) => {
-    const {dataname, datapath} = await dataService.randone();
+    const {dataname, dbname, datapath} = await dataService.randone();
     
     ctx.cookies.set('dataname', dataname, {
         signed: true,
@@ -15,8 +15,9 @@ router.get('/', async (ctx) => {
     });
 
     await ctx.render('home', {
-        dataname:dataname,
-        datapath:datapath,
+        dataname: dataname,
+        dbname: dbname,
+        datapath: datapath,
     });
 });
 

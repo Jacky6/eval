@@ -38,7 +38,7 @@ async function datatest (d,obj) {
         break;
         case 2:{
             console.log('查询一条数据');
-            const result2 = await dataService.show('audio_1');
+            const result2 = await dataService.show('1 copy 3.wav');
             console.log(result2);
         }
         break;
@@ -111,5 +111,5 @@ obj = [{
     datapath: 'D:\\projects\\vue\\sounds\\2.wav'
   }];
 
-datatest(1,obj);
+datatest(2);
 

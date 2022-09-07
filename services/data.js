@@ -1,5 +1,7 @@
 const sequelize = require('../shared/sequelize');
 const data = sequelize.import('../models/data');
+const ceping = sequelize.import('../models/ceping');
+const allocation = require('../alloction');
 
 // 批量添加数据（管理员功能）
 // 参数 obj = [{数据1名字，dbname, datapath},{数据2,...},...]
@@ -15,9 +17,28 @@ exports.publish = async function (obj){
     } 
 }
 
-// 查询一条数据
+// 查询一条数据均值 
+// 输入：dataname
+// 输出：avg = {dataname,dbname,datapath,evalnum,avgindex1,avgindex2,..}
 exports.show = async function (dataname) {
-    return data.findByPk(dataname);
+    const {dbname, datapath, evalnum} = await data.findByPk(dataname);
+    const evalOpt = allocation.evalOpt;
+    const avg = {};
+    avg['dataname'] = dataname;
+    avg['dbname'] = dbname;
+    avg['datapath'] = datapath;
+    avg['evalnum'] = evalnum;
+    for(key in evalOpt){    
+            result = await ceping.findAll({
+            attributes:[[sequelize.fn('avg',sequelize.col(evalOpt[key])), 'avg'+evalOpt[key]]],
+            raw: true,
+            where: {
+                dataname
+            },
+        });        
+        avg['avg'+evalOpt[key]] = result[0]['avg'+evalOpt[key]]
+    }
+    return avg;
 };
 
 // 所有数据列表
@@ -32,7 +53,7 @@ exports.list = async function (page = 1, size = 10) {
 // 首页随机一条数据
 exports.randone = async function () {
     return await data.findOne({
-        attributes: ['dataname','datapath'],
+        attributes: ['dataname', 'dbname', 'datapath'],
         order: [sequelize.literal('rand()')]
     });
 };
