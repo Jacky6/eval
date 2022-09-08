@@ -4,6 +4,5 @@
 module.exports = async function (ctx, next) {
     ctx.state.useraccount = ctx.cookies.get('useraccount', {signed: true});
     ctx.state.dataname = ctx.cookies.get('dataname', {signed: true});
-    ctx.state.flag = ctx.cookies.get('flag', {signed: true});
     await next();
 };

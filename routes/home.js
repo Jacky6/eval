@@ -13,7 +13,11 @@ router.get('/', async (ctx) => {
         signed: true,
         maxAge: 3600 * 24 * 1000,   // cookie 有效时长
     });
-
+    ctx.state.flag = ctx.cookies.get('flag');
+    ctx.cookies.set('flag', 0, {
+        signed: true,
+        maxAge: 3600 * 24 * 1000,   // cookie 有效时长
+    });
     await ctx.render('home', {
         dataname: dataname,
         dbname: dbname,
@@ -40,6 +44,7 @@ router.post('/', guard, async (ctx) => {
         signed: true,
         maxAge: 3600 * 24 * 1000,   // cookie 有效时长
     });
+    ctx.state.flag = ctx.cookies.get('flag');
     ctx.redirect('back');
 })
 
