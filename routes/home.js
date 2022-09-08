@@ -35,7 +35,12 @@ router.post('/', guard, async (ctx) => {
     const dataname = ctx.state.dataname;
     const useraccount = ctx.state.useraccount;
     await cepingService.publish(dataname, useraccount, obj);
-    await ctx.redirect('back');
+    
+    ctx.cookies.set('flag', 1, {
+        signed: true,
+        maxAge: 3600 * 24 * 1000,   // cookie 有效时长
+    });
+    ctx.redirect('back');
 })
 
 
