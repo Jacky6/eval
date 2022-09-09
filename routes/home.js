@@ -7,12 +7,34 @@ const dataService = require('../services/data');
 const cepingService = require('../services/ceping');
 
 router.get('/', async (ctx) => {
-    const {dataname, dbname, datapath} = await dataService.randone();
+    ctx.state.full = 0;
+    useraccount = ctx.state.useraccount;
+    if(useraccount != undefined){
+        ret1 = await cepingService.listByUser(useraccount);
+        usernum = ret1['count'];
+        ret2 = await dataService.list();
+        datanum = ret2['count'];
+        if(usernum == datanum){
+            tar = await dataService.randone();
+            ctx.state.full = 1;
+        }
+        else{
+            tar = await dataService.randone(useraccount);
+        }
+    }
+    else{
+        tar = await dataService.randone(useraccount);
+    }
+    const dataname = tar['dataname'];
+    const dbname = tar['dbname'];
+    const datapath = tar['datapath'];
     
-    ctx.cookies.set('dataname', dataname, {
-        signed: true,
-        maxAge: 3600 * 24 * 1000,   // cookie 有效时长
+    
+    ctx.cookies.set('dataname', new Buffer(dataname).toString('base64'), {
+    signed: true,
+    maxAge: 3600 * 24 * 1000,   // cookie 有效时长
     });
+
     ctx.state.flag = ctx.cookies.get('flag');
     ctx.cookies.set('flag', 0, {
         signed: true,
@@ -35,8 +57,8 @@ router.post('/', guard, async (ctx) => {
     const comment = ctx.request.body['comment'];
     if(comment != ''){
         obj['comment'] = comment;
-    }
-    const dataname = ctx.state.dataname;
+    } 
+    const dataname = new Buffer(ctx.state.dataname, 'base64').toString();
     const useraccount = ctx.state.useraccount;
     await cepingService.publish(dataname, useraccount, obj);
     

@@ -55,11 +55,11 @@ async function datatest (d,obj) {
 
 // 测评接口测试
 async function cepingtest (d) {
-    const index = [1,2,3];
+    obj = {'index1':1};
     switch(d) {
         case 1:{
             console.log('添加或更新测试');
-            const result1 = await cepingService.publish('audio_1','zzc12345',index);
+            const result1 = await cepingService.publish('1.wav','zhengzhi',obj);
             console.log(result1);
         }
         break;
@@ -71,14 +71,14 @@ async function cepingtest (d) {
         break;
         case 3:{
             console.log('查看 指定数据 测评列表 测试');
-            const result3 = await cepingService.listByData('audio_1', 1, 10);
+            const result3 = await cepingService.listByData('1.wav', 1, 10);
             console.log(result3);
         }
         break;
         case 4:{
             console.log('查看 指定用户 测评列表 测试');
-            const result4 = await cepingService.listByUser('zzc12345', 1, 10);
-            console.log(result4);
+            const result4 = await cepingService.listByUser('zhengzhi', 2, 1);
+            console.log(result4['rows'][0]);
         }
         break;
         case 5: {
@@ -90,26 +90,4 @@ async function cepingtest (d) {
     }
 }
 
-obj = [{
-    dataname: '3.wav',
-    dbname: 'sounds',
-    datapath: 'D:\\projects\\vue\\sounds\\3.wav'
-  },
-  {
-    dataname: '1.wav',
-    dbname: 'sounds',
-    datapath: 'D:\\projects\\vue\\sounds\\1.wav'
-  },
-  {
-    dataname: '4.wav',
-    dbname: 'sounds',
-    datapath: 'D:\\projects\\vue\\sounds\\4.wav'
-  },
-  {
-    dataname: '2.wav',
-    dbname: 'sounds',
-    datapath: 'D:\\projects\\vue\\sounds\\2.wav'
-  }];
-
-datatest(2);
-
+cepingtest(1);

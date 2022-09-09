@@ -51,11 +51,35 @@ exports.list = async function (page = 1, size = 10) {
 };
 
 // 首页随机一条数据
-exports.randone = async function () {
-    return await data.findOne({
-        attributes: ['dataname', 'dbname', 'datapath'],
-        order: [sequelize.literal('rand()')]
-    });
+// 输入：useraccount
+// 输出：tar = {dataname, dbname, datapath}
+exports.randone = async function (useraccount) {
+    if(useraccount == undefined){// 未登录时随机一条数据
+        var {dataname, dbname, datapath} = await data.findOne({
+            attributes: ['dataname', 'dbname', 'datapath'],
+            order: [sequelize.literal('rand()')]
+        });
+        console.log(useraccount);
+        return {dataname, dbname, datapath};
+    }
+    else{// 随机一条用户没有测评过的数据
+        do{
+            var {dataname, dbname, datapath} = await data.findOne({
+                attributes: ['dataname', 'dbname', 'datapath'],
+                order: [sequelize.literal('rand()')]
+            });
+            var targetcepingid = await ceping.findOne({
+                attributes: ['id'], // 指定返回字段
+                where:{
+                    dataname,
+                    useraccount
+                }
+            }); 
+        }
+        while(targetcepingid != null);
+        return {dataname, dbname, datapath};
+    }
+    
 };
 
 //  数据被测评数目加一

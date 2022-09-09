@@ -12,7 +12,7 @@ const evalOpt = allocation.evalOpt;
 // 测评一条数据
 //:para 
 //dataname:数据名称 useraccount：用户账号
-//obj：字典{indexii:indexi,...,comment:'comment'}
+//obj：字典{indexi:indexi,...,comment:'comment'}
 exports.publish = async function (dataname, useraccount, obj) {
     const targetdata = await dataService.show(dataname);
     if (targetdata === null) {
@@ -63,8 +63,20 @@ exports.destroy = async function (cepingId, useraccount) {
 
 
 // 查看指定数据测评列表
+// 输入： datanaem，page（），size(一页大小)
+// 输出：{ count(总数)，rows(第page页全部) }
 exports.listByData = async function(dataname, page, size) {
+    var tar = [];
+    tar.push('id');
+    tar.push('dataname');
+    for(key in evalOpt){
+        tar.push(evalOpt[key]);
+    }
+    tar.push('comment');
+    tar.push('createdAt');
+    tar.push('updatedAt');
     return ceping.findAndCountAll({
+        attributes: tar,
         where: {dataname},
         offset: (page-1) * size,
         limit: size,
@@ -73,8 +85,20 @@ exports.listByData = async function(dataname, page, size) {
 };
 
 // 查看 指定用户 的 测评列表
-exports.listByUser = async function(useraccount, page, size) {
+// 输入： 用户账号，page（），size(一页大小)
+// 输出：{ count(总数)，rows(第page页全部) }
+exports.listByUser = async function(useraccount, page=1, size=1) {
+    var tar = [];
+    tar.push('id');
+    tar.push('dataname');
+    for(key in evalOpt){
+        tar.push(evalOpt[key]);
+    }
+    tar.push('comment');
+    tar.push('createdAt');
+    tar.push('updatedAt');
     return ceping.findAndCountAll({
+        attributes: tar,
         where: {useraccount},
         offset: (page-1) * size,
         limit: size,
@@ -83,9 +107,21 @@ exports.listByUser = async function(useraccount, page, size) {
 };
 
 // 查看 指定用户 和 指定数据 的测评结果
+// 输入： dataname, 用户账号，page（），size(一页大小)
+// 输出：{ count(总数)，rows(第page页全部) }
 exports.listByDataAndUser = async function(dataname, useraccount) {
+    var tar = [];
+    tar.push('id');
+    tar.push('dataname');
+    for(key in evalOpt){
+        tar.push(evalOpt[key]);
+    }
+    tar.push('comment');
+    tar.push('createdAt');
+    tar.push('updatedAt');
     return ceping.findOne({
-        where:{
+        attributes: tar,
+        where: {
             dataname,
             useraccount
         }
