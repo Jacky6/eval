@@ -65,7 +65,7 @@
                 <% if(useraccount) { %>
                     <div class="col-lg-3 col-md-3 col-12 text-center">
                         <button type="button" class="btn btn-outline-primary me-2"
-                            onclick="window.location.href='/user/personalInfo'">个人中心</button>
+                            onclick="window.location.href='/user/personalInfo/dataset_name=竞品A-常规指标&page_index=1'">个人中心</button>
                         <a class="btn btn-outline-primary me-2" href="/user/logout"
                             onclick="return confirm('确定退出吗?')">退出登录</a>
                     </div>
@@ -85,27 +85,6 @@
 
     <% var select_dataset="竞品A" ; var dataset_list=['竞品A', 'data' ]%>
         <div class="container">
-            <div class="row border-bottom" style="margin-bottom: 10px;">
-                <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#home-collapse" aria-expanded="true">
-                            <div style="font-size: 20px; font-weight: 400;">
-                                当前数据集：<%= select_dataset %>
-                            </div>
-                        </button>
-                        <div class="collapse show" id="home-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <% dataset_list.forEach(item=>{%>
-                                    <li><a href="#" class="link-dark rounded" style="font-size: 15px;">
-                                            <%= item %>
-                                        </a></li>
-                                    <% })%>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
 
             <!-- 基本数据展示 -->
             <div class="row justify-content-center" style="margin-bottom: 10px;">

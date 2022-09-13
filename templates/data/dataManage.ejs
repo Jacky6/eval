@@ -58,7 +58,8 @@
                 <div class="col-lg-6 col-md-6 col-9">
                     <ul class="nav  col-md-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-                        <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+                        <li><a href="/data/dataManage/dbname=竞品A-常规指标&page_index=1"
+                                class="nav-link px-2 link-dark">音频数据</a></li>
                     </ul>
                 </div>
 
@@ -66,7 +67,7 @@
                 <% if(useraccount) { %>
                     <div class="col-lg-3 col-md-3 col-12 text-center">
                         <button type="button" class="btn btn-outline-primary me-2"
-                            onclick="window.location.href='/user/personalInfo'">个人中心</button>
+                            onclick="window.location.href='/user/personalInfo/dbname=竞品A-常规指标&page_index=1'">个人中心</button>
                         <a class="btn btn-outline-primary me-2" href="/user/logout"
                             onclick="return confirm('确定退出吗?')">退出登录</a>
                     </div>
@@ -84,7 +85,7 @@
         </div>
     </header>
 
-    <% var select_dataset="竞品A" ; var dataset_list=['竞品A', 'data' ]%>
+    <% var dataset_list=['竞品A-常规指标', '竞品A-回声消除' ]; var tmp_cnt=12; var dbname='竞品A-常规指标' ; var page_index=1;%>
         <div class="container">
             <div class="row border-bottom" style="margin-bottom: 10px;">
                 <ul class="list-unstyled ps-0">
@@ -92,13 +93,14 @@
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                             data-bs-target="#home-collapse" aria-expanded="true">
                             <div style="font-size: 20px; font-weight: 400;">
-                                当前数据集：<%= select_dataset %>
+                                当前数据集：<%= dbname %>
                             </div>
                         </button>
                         <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <% dataset_list.forEach(item=>{%>
-                                    <li><a href="#" class="link-dark rounded" style="font-size: 15px;">
+                                    <li><a href="/data/dataManage/dbname=<%= item%>&page_index=1"
+                                            class="link-dark rounded" style="font-size: 15px;">
                                             <%= item %>
                                         </a></li>
                                     <% })%>
@@ -168,23 +170,32 @@
                                 <div id="table-default" class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <tr>
-                                                <th><button class="table-sort" data-sort="sort-id">ID</button></th>
-                                                <th><button class="table-sort" data-sort="sort-name">文件名</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-num">总测评次数</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index1">语言连续度</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index2">语音清晰度</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index3">语音失真度</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index4">背景噪音消除效果</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index5">回声消除效果</button>
-                                                </th>
-                                            </tr>
+                                            <%var ceping_arr=['语言连续度', '语音清晰度' , '语音失真度' , '背景噪音消除效果' , '回声消除效果' ]; var
+                                                select_arr=[[0,1,2,3], [4]]; select_num=0; if(dbname=="竞品A-常规指标"
+                                                ){select_num=0;} else if(dbname=="竞品A-回声消除" ){select_num=1;}%>
+                                                <tr>
+                                                    <!-- 表头前三项固定为ID，文件名和测评次数 -->
+                                                    <th>
+                                                        <div>ID</div>
+                                                    </th>
+                                                    <th>
+                                                        <div>文件名</div>
+                                                    </th>
+                                                    <th><button class="table-sort">测评次数</button>
+                                                    </th>
+                                                    <!-- 后面的指标根据数据集不同而加载不同指标 -->
+                                                    <% var select_index=select_arr[select_num];
+                                                        select_index.forEach(item=>{
+                                                        %>
+                                                        <th><button class="table-sort">
+                                                                <%= ceping_arr[item] %>
+                                                            </button>
+                                                            <% })%>
+                                                        <th>
+                                                            <div>评论</div>
+                                                        </th>
+                                                        <th></th>
+                                                </tr>
                                         </thead>
                                         <tbody class="table-tbody">
                                             <script>
@@ -240,6 +251,46 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="card-footer d-flex align-items-center">
+                                <ul class="pagination m-0 ms-auto">
+                                    <% if(page_index==1){%>
+                                        <li class="page-item disabled">
+                                            <%} else {%>
+                                        <li class="page-item">
+                                            <%}%>
+                                                <a class="page-link"
+                                                    href="
+                                                    /data/dataManage/dbname=<%=dbname %>&page_index=<%= parseInt(page_index)-1 %>"
+                                                    tabindex="-1" aria-disabled="true">
+                                                    上一页
+                                                </a>
+                                        </li>
+                                        <!-- 根据当前条数显示所有记录，一页显示十条 -->
+                                        <% for(var i=1; i <=tmp_cnt /10 + 1; i++){ if(i==page_index){ %>
+                                            <li class="page-item active"><a class="page-link"
+                                                    href="/data/dataManage/dbname=<%= dbname %>&page_index=<%= i %>">
+                                                    <%= i %>
+                                                </a></li>
+                                            <% } else { %>
+                                                <li class="page-item"><a class="page-link"
+                                                        href="/data/dataManage/dbname=<%= dbname %>&page_index=<%= i %>">
+                                                        <%= i %>
+                                                    </a></li>
+
+                                                <%}}%>
+                                                    <% if(page_index==tmp_cnt /10 + 1){%>
+                                                        <li class="page-item disabled">
+                                                            <%} else {%>
+                                                        <li class="page-item">
+                                                            <%}%>
+                                                                <a class="page-link"
+                                                                    href="/data/dataManage/dbname=<%= dbname %>&page_index=<%= parseInt(page_index)+1 %>"
+                                                                    tabindex="-1" aria-disabled="true">
+                                                                    下一页
+                                                                </a>
+                                                        </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

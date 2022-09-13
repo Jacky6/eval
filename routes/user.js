@@ -7,6 +7,18 @@ const guard = require('../middlewares/guard');
 const router = new Router({prefix: '/user'});
 const allocation = require('../alloction');
 
+function formattime(timestr) {
+    var timestamp = Date.parse(timestr);
+    var date = new Date(timestamp);
+    var YY = date.getFullYear() + '-';
+    var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+    var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+    return YY + MM + DD + " " + hh + mm + ss;
+}
+
 router.get('/login', async (ctx) => {
     await ctx.render('user/login');
 });
@@ -48,66 +60,88 @@ router.get('/logout', async (ctx) => {
 router.get('/personalInfo', async (ctx) => {
     const useraccount = ctx.state.useraccount;
     const evalOpt = allocation.evalOpt;
+    const dbname = allocation.dbnames[0];
     page = 1;
     size = 10;
-    const{rows, count} = await cepingService.listByUser(useraccount, page, size);
-    ret = cepingService.listByUser(useraccount, page, size);
+    var { rows, count } = await cepingService.listByUser(useraccount, dbname ,page, size);
+    const usernum = count;
     var personal_tar = [];
-    for(key in rows){
+    for (key in rows) {
         var item = {};
         item['id'] = rows[key]['id'];
+        item['dataname'] = rows[key]['dataname'];
         item['comment'] = rows[key]['comment'];
-        item['createdAt'] = rows[key]['createdAt'];
-        item['updatedAt'] = rows[key]['updatedAt'];
+        item['createdAt'] = formattime(rows[key]['createdAt']);
+        item['updatedAt'] = formattime(rows[key]['updatedAt']);
+
         var index_arr = [];
-        for(key1 in evalOpt){
+        for (key1 in evalOpt) {
             index_arr.push(rows[key][evalOpt[key1]]);
         };
         item['index_arr'] = index_arr;
         personal_tar.push(item);
     }
-    console.log(personal_tar);
+
+    var {rows, count} = await dataService.listByDbname(dbname);
+    const datanum = count;
+    
     await ctx.render('/user/personalInfo', {
-        personal_tar:personal_tar,    
+        personal_tar: personal_tar,
+        dbname: dbname,
+        page_index: page,
+        usernum: usernum,
+        datanum: datanum,
     });
 });
 
-router.get('/home', guard, async (ctx) => {
-    const {page = 1, size = 10} = ctx.query;
-    const {rows, count} = await dataService.listByUser(ctx.state.useraccount, page, size);
-    await ctx.render('user/home', {
-        list: rows,
-        count,
-        page: Number(page),
-        size: Number(size)
-    });
-});
 
-router.get('/homepage/:id', async (ctx) => {
-    const {page = 1, size = 10} = ctx.query;
-    const {rows, count} = await dataService.listByUser(ctx.params.id, page, size);
-    await ctx.render('user/homepage', {
-        list: rows,
-        count,
-        page: Number(page),
-        size: Number(size)
-    });
-});
+router.get('/personalInfo/:params', async (ctx) => {
+    const params = ctx.params.params;
+    const dbname = params.split("&")[0].split("=")[1];
+    const page = params.split("&")[1].split("=")[1];
+    const useraccount = ctx.state.useraccount;
+    const evalOpt = allocation.evalOpt;
+    const size = 10;
+    console.log(dbname);
 
-router.get('/profile', guard, async (ctx) => {
-    const user = await userService.show(ctx.state.useraccount);
-    await ctx.render('user/profile', {
-        user
-    });
-});
+    var { rows, count } = await cepingService.listByUser(useraccount, dbname, page, size);
+    const usernum = count;
+    var personal_tar = [];
+    for (key in rows) {
+        var item = {};
+        item['id'] = rows[key]['id'];
+        item['dataname'] = rows[key]['dataname'];
+        item['comment'] = rows[key]['comment'];
+        item['createdAt'] = formattime(rows[key]['createdAt']);
+        item['updatedAt'] = formattime(rows[key]['updatedAt']);
 
-router.post('/profile', guard, async (ctx) => {
-    const {nickname, password} = ctx.request.body;
-    if (!nickname || nickname.length > 20) {
-        throw new Error('昵称不合法');
+        var index_arr = [];
+        for (key1 in evalOpt) {
+            index_arr.push(rows[key][evalOpt[key1]]);
+        };
+        item['index_arr'] = index_arr;
+        personal_tar.push(item);
     }
-    await userService.changeProfile(ctx.state.useraccount, nickname, password);
-    await ctx.redirect('/user/home');
+
+    var {rows, count} = await dataService.listByDbname(dbname);
+    const datanum = count;
+    
+    await ctx.render('/user/personalInfo', {
+        personal_tar: personal_tar,
+        dbname: dbname,
+        page_index: page,
+        datanum: datanum,
+        usernum:usernum,
+    });
 });
+
+// 删除一条测评
+router.get('/delete/:cepingId', guard, async (ctx) => {
+    const cepingId = ctx.params.cepingId;
+    const useraccount = ctx.state.useraccount;
+    await cepingService.destroy(cepingId, useraccount);
+    ctx.redirect('back');
+});
+
 
 module.exports = router;

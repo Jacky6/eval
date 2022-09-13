@@ -29,8 +29,7 @@ router.get('/', async (ctx) => {
     const dbname = tar['dbname'];
     const datapath = tar['datapath'];
     
-    
-    ctx.cookies.set('dataname', new Buffer(dataname).toString('base64'), {
+    ctx.cookies.set('dataname', new Buffer.from(dataname).toString('base64'), {
     signed: true,
     maxAge: 3600 * 24 * 1000,   // cookie 有效时长
     });
@@ -58,7 +57,7 @@ router.post('/', guard, async (ctx) => {
     if(comment != ''){
         obj['comment'] = comment;
     } 
-    const dataname = new Buffer(ctx.state.dataname, 'base64').toString();
+    const dataname = new Buffer.from(ctx.state.dataname, 'base64').toString();
     const useraccount = ctx.state.useraccount;
     await cepingService.publish(dataname, useraccount, obj);
     

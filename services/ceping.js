@@ -1,10 +1,14 @@
 // 数据测评
 const allocation = require('../alloction');
 const sequelize = require('../shared/sequelize');
+const {Sequelize} = require('sequelize');
+const Op = Sequelize.Op
+
 const dataService = require('./data');
 const userService = require('./user');
 
 const ceping = sequelize.import('../models/ceping');
+const data = sequelize.import('../models/data');
 const User = sequelize.import('../models/user');
 
 const evalOpt = allocation.evalOpt;
@@ -79,10 +83,10 @@ exports.listByData = async function(dataname, page=1, size=1) {
     })
 };
 
-// 查看 指定用户 的 测评列表
-// 输入： 用户账号，page（），size(一页大小)
+// 查看 指定用户和指定数据集 的 测评列表
+// 输入： useraccount, dbname, page（），size(一页大小)
 // 输出：{ count(总数)，rows(第page页全部) }
-exports.listByUser = async function(useraccount, page=1, size=1) {
+exports.listByUser = async function(useraccount, dbname='none', page=1, size=1) {
     var tar = [];
     tar.push('id');
     tar.push('dataname');
@@ -92,13 +96,32 @@ exports.listByUser = async function(useraccount, page=1, size=1) {
     tar.push('comment');
     tar.push('createdAt');
     tar.push('updatedAt');
-    return ceping.findAndCountAll({
+    if(dbname === 'none'){
+        return await ceping.findAndCountAll({
+            attributes: tar,
+            where: {useraccount},
+            include: [{
+                model: data,
+            }],
+            offset: (page-1) * size,
+            limit: size,
+            order: [['id','DESC']]
+        })
+    }
+    return await ceping.findAndCountAll({
         attributes: tar,
         where: {useraccount},
+        include: [{
+            model: data,
+            where: {
+                dbname,
+            },
+        }],
         offset: (page-1) * size,
         limit: size,
         order: [['id','DESC']]
     })
+    
 };
 
 // 查看 指定用户 和 指定数据 的测评结果
@@ -123,6 +146,17 @@ exports.listByDataAndUser = async function(dataname, useraccount) {
     })
 }
 
+// 按 测评项 区间统计测评条数
+// 输入：dbname, index(测评项), [down, up](上下限)
+// 输出：{rows, count}
+exports.listByIndex = async function(dataname, index, down=0, up=5){
+    return await ceping.findAndCountAll({
+        where: {dataname, 
+            index1: {
+                [Op.between]:[down, up],
+            }},
+    })
+}
 
 
 

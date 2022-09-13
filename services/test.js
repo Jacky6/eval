@@ -77,8 +77,8 @@ async function cepingtest (d) {
         break;
         case 4:{
             console.log('查看 指定用户 测评列表 测试');
-            const result4 = await cepingService.listByUser('zhengzhi', 2, 1);
-            console.log(result4['rows'][0]);
+            const result4 = await cepingService.listByUser('zhengzhi','db1', 1, 1);
+            console.log(result4);
         }
         break;
         case 5: {
@@ -87,7 +87,12 @@ async function cepingtest (d) {
             console.log(result5);
         }
         break;
+        case 6: {
+            console.log('统计测评项区间数目');
+            const result6 = await cepingService.listByIndex('1 copy.wav','index2', 0, 5);
+            console.log('6:',result6);
+        }
     }
 }
 
-cepingtest(1);
+cepingtest(4);

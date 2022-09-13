@@ -77,6 +77,7 @@ exports.randone = async function (useraccount) {
             }); 
         }
         while(targetcepingid != null);
+        
         return {dataname, dbname, datapath};
     }
     
@@ -104,3 +105,17 @@ exports.delevalnum = async function (dataname){
     return await targetdata.save();
 }
 
+// 查询指定数据库所有数据
+// 输入：dbname
+// 输出：{rows, count}
+exports.listByDbname = async function (dbname, page = 1, size = 10) {
+    return data.findAndCountAll({
+        attributes: ['dataname', 'dbname', 'datapath', 'evalnum'],
+        where: {
+            dbname,
+        },
+        limit: size,
+        offset: (page - 1) * size,
+        order: [['evalnum', 'DESC']],
+    });
+};
