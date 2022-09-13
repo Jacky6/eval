@@ -11,6 +11,12 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/album/">
   <!-- Bootstrap core CSS -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/tabler.min.css" rel="stylesheet" />
+  <link href="/css/tabler-flags.min.css" rel="stylesheet" />
+  <link href="/css/tabler-payments.min.css" rel="stylesheet" />
+  <link href="/css/tabler-vendors.min.css" rel="stylesheet" />
+  <link href="/css/demo.min.css" rel="stylesheet" />
+
 
   <style>
     .bd-placeholder-img {
@@ -53,8 +59,15 @@
     }
 
 
-    .header-title :hover{
-      background-color: lightgray;
+    .header-title {
+      height: 50px;
+      width: 100px;
+    }
+
+    .header-title :hover {
+      height: 30px;
+      width: 80px;
+      background-color: lightgrey;
     }
   </style>
 
@@ -62,19 +75,23 @@
 </head>
 
 <body>
-  <!-- <header style="margin-top:30px; margin-bottom: 30px;">
+
+  <!-- <header style="margin-top:30px; margin-bottom: 10px;">
     <div class="container">
       <div class="row  justify-content-center align-items-center">
         <div class="col-lg-3">
-          <h1 class="fw-light">
+          <h1 class='fw-bold' style="font-size: 35px;">
             主观听测平台
           </h1>
         </div>
         <div class="col-lg-6">
-          <ul class="nav col-12 col-md-auto mb-2 justify-content-center" >
-            <li><a href="/" class="nav-link link-dark header-title"><h4>主页</h4>
-            </a></li>
-            <li><a href="/data/dataManage" class="nav-link header-title link-secondary"><h4>音频数据</h4></a></li>
+          <ul class="nav col-12 col-md-auto justify-content-center">
+            <li><a href="/" class="nav-link link-dark header-title" style="text-align:center;">
+                <h2 style="margin:auto;">主页</h2>
+              </a></li>
+            <li><a href="/data/dataManage" class="nav-link header-title link-secondary" style="text-align:center;">
+                <h2 style="margin:auto;">数据管理</h2>
+              </a></li>
           </ul>
         </div>
 
@@ -96,245 +113,372 @@
             <% } %>
       </div>
     </div>
-
-    <HR style= " FILTER: alpha (opacity = 100, finishopacity =0 , style= 3 )" width ="100%" color =#987 cb 9 SIZE = 3>
-
-
+    <HR style=" FILTER: alpha (opacity = 100, finishopacity =0 , style= 3 )" width="100%" color=#987 cb 9 SIZE=3>
   </header> -->
 
-
-  <div class="container">
-    <header
-      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-          <use xlink:href="#bootstrap" />
-        </svg>
-      </a>
-
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-          <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
-        </ul>
-
-
-      <% if(useraccount) { %>
-        <div class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-primary me-2"
-            onclick="window.location.href='/user/personalInfo'">个人中心</button>
-          <a class="btn btn-outline-primary me-2" href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a>
+  <header class="align-items-center justify-content-center justify-content-md-between border-bottom">
+    <div class="container" style="margin-top: 10px;">
+      <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-6 col-12 text-center">
+          <h1 class='fw-bold' style="font-size: 30px;">
+            主观听测平台
+          </h1>
         </div>
-        <% } else{ %>
-          <div class="col-md-3 text-end">
-            <% if(!useraccount) { %>
-              <button type="button" class="btn btn-outline-primary me-2"
-                onclick="window.location.href='/user/login'">登录</button>
-              <button type="button" class="btn btn-outline-primary me-2"
-                onclick="window.location.href='/user/register'">注册</button>
-              <% } %>
-          </div>
-          <% } %>
-    </header>
-</div> 
-<main>
-  <div class="text-center container">
-    <div class="row">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h2 class="fw-light">主观听测平台</h1>
-          <p class="lead text-muted">点击下方语音播放，根据语音质量评分（1~5分），简要描述对该语音的评价，完成后点击提交</p>
 
+        <div class="col-lg-6 col-md-6 col-9">
+          <ul class="nav  col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
+            <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+          </ul>
+        </div>
+
+
+        <% if(useraccount) { %>
+          <div class="col-lg-3 col-md-3 col-12 text-center">
+            <button type="button" class="btn btn-outline-primary me-2"
+              onclick="window.location.href='/user/personalInfo'">个人中心</button>
+            <a class="btn btn-outline-primary me-2" href="/user/logout" onclick="return confirm('确定退出吗?')">退出登录</a>
+          </div>
+          <% } else{ %>
+            <div class="col-md-3 col-12 text-center">
+              <% if(!useraccount) { %>
+                <button type="button" class="btn btn-outline-primary me-2"
+                  onclick="window.location.href='/user/login'">登录</button>
+                <button type="button" class="btn btn-outline-primary me-2"
+                  onclick="window.location.href='/user/register'">注册</button>
+                <% } %>
+            </div>
+            <% } %>
       </div>
     </div>
-  </div>
+  </header>
 
-    <div class="container" style="margin-bottom:50px;">
-      <!-- 打分块 -->
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-4 col-sm-1 col-sx-1 align-self-center"
-          style="background-color: #55595c; padding: 20px;">
+  <main>
 
-          <!--#55595c -->
-          <div class="row">
-            <script>
-              var dataname = '<%= dataname %>'
-            </script>
-            <div class="row justify-content-center">
-              <div class="col-12 text-white" style="margin-bottom: 10px;">
-              文件名称：<%= dataname %>
+    <!-- 提交成功对话框，有两种状态，一种是初始化，flag为false；一种是提交表单成功后刷新进入，flag为true -->
+    <% console.log(flag); if(flag){%>
+      <div class="modal modal-blur fade show" id="modal-success" tabindex="-1" style="display: block;" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <!-- <div class="modal-status bg-success"></div> -->
+
+            <div class="modal-body text-center py-4">
+              <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9 12l2 2l4 -4" />
+              </svg> -->
+              <h3>提交成功！</h3>
+              <div class="text-muted">测评提交成功！点击下方按钮测评下一条。</div>
+            </div>
+
+            <div class="modal-footer">
+              <div class="w-100">
+                <div class="row justify-content-center">
+                  <div class="col-6">
+                    <div class="btn btn-success w-100" onclick="closeModal()">
+                      继续测评
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <% }%>
 
-            <div class="row">
-            <!-- 音频文件在这儿渲染 -->
-              <audio src="<%= datapath %>" controls="controls"></audio>
+        <!-- 数据校验错误对话框 -->
+        <div class=" modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="modal-status bg-danger"></div>
+              <div class="modal-body text-center py-4">
+                <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 9v2m0 4v.01" />
+                  <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                </svg>
+                <h3>提交失败</h3>
+                <div class="text-muted">Do you really want to remove 84 files? What you've done cannot
+                  be undone.
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="w-100">
+                  <div class="row">
+                    <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                        Cancel
+                      </a></div>
+                    <div class="col"><a href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                        Delete 84 items
+                      </a></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          <!-- 一组评分 -->
-          <form method="post" action="/"
-            style="background-color: white; border-radius: 4%; padding: 5px; margin-top: 10px;">
-            <div id="cepingbox">
+        <!-- 测评部分 -->
+        <div class="text-center container">
+          <div class="row">
+            <div class="col-lg-6 col-md-8 mx-auto">
+              <h2 class="fw-light">主观听测平台</h1>
+                <p class="lead text-muted">点击下方语音播放，根据语音质量评分（1~5分），简要描述对该语音的评价，完成后点击提交，进入下一条的测评</p>
+            </div>
+          </div>
+        </div>
 
-              <!-- 对指标数组循环 -->
-              <script type="text/javascript">
-                var ceping_arr = ['语言连续度', '语音清晰度', '语音失真度', '背景噪音消除效果', '回声消除效果'];
-                var name_arr = ['index1', 'index2', 'index3', 'index4', 'index5']
-                var list_str = '';
-                var index = 0;
-                ceping_arr.forEach(item => {
-                  list_str += `
+        <div class="container" style="margin-bottom:50px;">
+          <!-- 打分块 -->
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-4 col-sm-1 col-sx-1 align-self-center"
+              style="background-color: #55595c; padding: 20px;">
+
+              <!--#55595c -->
+              <div class="row">
+
+                <div class="row justify-content-center">
+                  <div class="col-12 text-white" style="margin-bottom: 10px;">
+                    文件名称：<%= dataname %>
+                  </div>
+                  <% if(full){ %>
+                    <div class="col-12 text-red" style="margin-bottom: 10px; font-size:20px;font-weight: 550;">
+                      （已全部测评，继续测评将更新之前数据）
+                    </div>
+                    <%}%>
+                </div>
+
+                <div class="row">
+                  <!-- 音频文件在这儿渲染 -->
+                  <audio src="<%= datapath %>" controls="controls"></audio>
+                </div>
+              </div>
+
+              <!-- 一组评分 -->
+              <form method="post" action="/"
+                style="background-color: white; border-radius: 4%; padding: 5px; margin-top: 10px;" id="myForm">
+                <div id="cepingbox">
+
+                  <!-- 对指标数组循环 -->
+                  <!-- <script type="text/javascript">
+                    var ceping_arr = ['语言连续度', '语音清晰度', '语音失真度', '背景噪音消除效果', '回声消除效果'];
+                    var name_arr = ['index1', 'index2', 'index3', 'index4', 'index5']
+                    var list_str = '';
+                    var index = 0;
+                    ceping_arr.forEach(item => {
+                      list_str += `
                   <div class="row justify-content-center cepingline" >
                     <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                       <text class="btn-group-label">${item}</text>
                       </div>
                       <div class="col-lg-4 col-md-4 col-sm-4 col-4" >
-                        <input style="width: 50px;" type="number" name=${name_arr[index]} id="" value=0>
+                        <input style="width: 50px;" type="number" name=${name_arr[index]} id="index_${index + 1}" value=1 oninput="if(value>5)value=5;if(value.length>3)value=value.slice(0,3);if(value<1)value=1" />
                         </div>
                       </div>
                   `
-                  index += 1;
-                })
-                document.write(list_str);
-              </script>
-            </div>
-
-            <div class="row justify-content-center" style="margin-top: 20px;">
-              <div class="col-lg-10 col-md-11 col-11 align-self-center">
-                <textarea name="comment" id="" style="width: 100%;" rows="3" placeholder="请简要输入对该语音的评价"></textarea>
-              </div>
-            </div>
-
-            <div class="row justify-content-end" style="margin-top: 10px;">
-              <div class="col-lg-3 col-md-3 col-3">
-                <button type="submit" name="submitRate" class="btn btn-default text-white"
-                  style="background-color: #55595c;">提交</button>
-              </div>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="text-center container">
-      <div class="row">
-        <div class="col-lg-6 col-md-8 mx-auto">
-          <h2 class="fw-light">评价指标介绍</h1>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="container-xl">
-      <div class="row row-cards">
-        <div class="col-xl-12">
-          <div class="card">
-            <div class="table-responsive">
-              <table class="table table-vcenter card-table table-striped">
-                <thead>
-                  <tr>
-                    <th>指标</th>
-                    <th>得分</th>
-                    <th>描述</th>
-                    <th class="w-1"></th>
-                  </tr>
-                </thead>
-
-                <!-- 循环创建表格 -->
-                <tbody>
-                  <script type="text/javascript">
-                    var ceping_arr = ['语言连续度', '语音清晰度', '语音失真度', '背景噪音消除效果', '回声消除效果'];
-                    var score_des_arr = ['音频主观效果非常差，体验过程中存在非常大的问题，用户非常反感，不想继续使用。',
-                      '音频主观效果较差，体验过程中存在较大问题，用户感觉不舒服，已经影响正常使用；',
-                      '音频主观效果一般，体验过程存在轻微问题，用户可以接受，不会影响用户使用：',
-                      '音频主观效果比较好，体验过程中声音非常清晰，无明显问题，需仔细聆听才可以发现，用户整体听感比较舒服；',
-                      '音频主观效果非常好，体验过程中声音非常清晰，无任何问题，用户整体听感非常舒服；']
-                    var ceping_des_arr = ['(评价语音是否有丢失)', '(评价语音内容是否能听清)', '(评价语音听感是否失真)',
-                      '(评价噪声是否消除干净，残留程度)', '(评价是否能听到回声，以及回声的大小)']
-                    var audio_arr = []
-                    var list_str = '';
-                    var group_index = 0;
-                    var index = 0;
-                    ceping_arr.forEach(item => {
-                      // 第一行和第二行特殊处理，因为含有指标名称
-                      list_str += `
-                      <tr style="border-top-width: 3px;">
-                        <td>${item}</td>
-                        <td class="text-muted">
-                          1
-                        </td>
-                        <td class="text-muted">
-                            ${score_des_arr[0]}
-                        </td>
-                        <td>
-                        <audio src="example\\1.wav" id="${"audio_" + index}"></audio>
-                        <span style="width: 100%;text-align: center; color: blue;">
-                          <span class="audio_text" style="cursor: pointer;" id="${"start_" + index}" onclick='play_audio("${index}")'>播放</span>
-                        </span>
-                      </td>
-                      </tr>
-                      `
-                      index += 1
-
-                      // 第二行
-                      list_str += `
-                        <tr>
-                        <td class="text-muted">
-                          ${ceping_des_arr[group_index]}
-                        </td>
-                        <td class="text-muted">
-                          2
-                        </td>
-                        <td class="text-muted">
-                          ${score_des_arr[1]}
-                        </td>
-                        <td>
-                          <audio src="example\\1.wav" id="${"audio_" + index}"></audio>
-                        <span style="width: 100%;text-align: center; color: blue;">
-                          <span class="audio_text" style="cursor: pointer;" id="${"start_" + index}" onclick='play_audio("${index}")'>播放</span>
-                        </span>
-                        </td>
-                      </tr >
-                        `
-                      index += 1
-
-                      // 第三行到第五行
-                      for (var i = 2; i <= 4; i++) {
-                        list_str += `
-                          <tr>
-                          <td></td>
-                          <td class="text-muted">
-                            ${i + 1}
-                          </td>
-                          <td class="text-muted">
-                            ${score_des_arr[i]}
-                          </td>
-                          <td>
-                            <audio src="example\\1.wav" id="${"audio_" + index}"></audio>
-                        <span style="width: 100%;text-align: center; color: blue;">
-                          <span class="audio_text" style="cursor: pointer;" id="${"start_" + index}" onclick='play_audio("${index}")'>播放</span>
-                        </span>
-                          </td>
-                        </tr >
-                        `
-
-                        index += 1
-                      }
-
-                      group_index += 1
-
+                      index += 1;
                     })
-                    console.log(list_str)
-                    document.write(list_str)
-                  </script>
-                </tbody>
+                    document.write(list_str);
+                  </script> -->
 
+                  <% var ceping_arr=['语言连续度', '语音清晰度' , '语音失真度' , '背景噪音消除效果' , '回声消除效果' ]; var
+                    name_arr=['index1', 'index2' , 'index3' , 'index4' , 'index5' ]; var index=0; %>
+                    <% if(dbname=="db1" ){for(let i=0; i < 4; i ++){ %>
+                      <div class="row justify-content-center cepingline">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                          <text class="btn-group-label">
+                            <%= ceping_arr[i] %>
+                          </text>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                          <input style="width: 50px;" type="number" name="name" id="<%= name_arr[i] %>" value=1
+                            oninput="if(value>5)value=5;if(value.length>3)value=value.slice(0,3);if(value<1)value=1" />
+                        </div>
+                      </div>
+                      <%}} else if(dbname=="db2" ){ %>
+                        <div class="row justify-content-center cepingline">
+                          <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                            <text class="btn-group-label">
+                              <%= ceping_arr[4] %>
+                            </text>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                            <input style="width: 50px;" type="number" name="name" id="<%= name_arr[4] %>" value=1
+                              oninput="if(value>5)value=5;if(value.length>3)value=value.slice(0,3);if(value<1)value=1" />
+                          </div>
+                        </div>
+                        <%}%>
+                </div>
 
-              </table>
+                <div class="row justify-content-center" style="margin-top: 20px;">
+                  <div class="col-lg-10 col-md-11 col-11 align-self-center">
+                    <textarea name="comment" id="" style="width: 100%;" rows="3" placeholder="请简要输入对该语音的评价"></textarea>
+                  </div>
+                </div>
+
+                <div class="row justify-content-end" style="margin-top: 10px;">
+                  <div class="col-lg-3 col-md-3 col-3">
+
+                    <!-- data-bs-toggle="modal" data-bs-target="#modal-success" -->
+                    <button type="submit" class="btn btn-default text-white"
+                      style="background-color: #55595c;">提交</button>
+                  </div>
+                </div>
+              </form>
+
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+        <script type="text/javascript">
+          function openModal() {
+            // 展示提交成功的对话框
+            var modal = document.getElementById("modal-success")
+            modal.style.display = "block";
+            modal.className += 'show'
+          }
+
+          // 提交表单
+          function submitForm() {
+            var form = document.getElementById("myForm")
+            console.log(form)
+            form.method = "post"
+            form.action = "/"
+            form.submit();
+          }
+
+          // 关闭对话框,同时设置cookie中的flag为0，为跳转到其他页面后再回到主页做准备
+          function closeModal() {
+            var modal = document.getElementById("modal-success")
+            modal.style.display = "none";
+            modal.className -= 'show'
+          }
+        </script>
+
+        <div class="text-center container">
+          <div class="row">
+            <div class="col-lg-6 col-md-8 mx-auto">
+              <h2 class="fw-light">评价指标介绍</h1>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="container-xl">
+          <div class="row row-cards">
+            <div class="col-xl-12">
+              <div class="card">
+                <div class="table-responsive">
+                  <table class="table table-vcenter card-table table-striped">
+                    <thead>
+                      <tr>
+                        <th>指标</th>
+                        <th>得分</th>
+                        <th>描述</th>
+                        <th class="w-1"></th>
+                      </tr>
+                    </thead>
+
+                    <!-- 循环创建表格 -->
+                    <tbody>
+                      <% var ceping_arr=['语言连续度', '语音清晰度' , '语音失真度' , '背景噪音消除效果' , '回声消除效果' ]; var
+                        score_des_arr=[['音频主观效果非常差，体验过程中存在非常大的问题，用户非常反感，不想继续使用。', '音频主观效果较差，体验过程中存在较大问题，用户感觉不舒服，已经影响正常使用；'
+                        , '音频主观效果一般，体验过程存在轻微问题，用户可以接受，不会影响用户使用：' , '音频主观效果比较好，体验过程中声音非常清晰，无明显问题，需仔细聆听才可以发现，用户整体听感比较舒服；'
+                        , '音频主观效果非常好，体验过程中声音非常清晰，无任何问题，用户整体听感非常舒服；'
+                        ],["21","22","23","24","25"],["31","32","33","34","35"],["41","42","43","44","45"],["51","52","53","54","55"]];
+                        var ceping_des_arr=['(评价语音是否有丢失)', '(评价语音内容是否能听清)' , '(评价语音听感是否失真)' , '(评价噪声是否消除干净，残留程度)'
+                        , '(评价是否能听到回声，以及回声的大小)' ]; var
+                        example_arr=[["example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav"],
+                        ["example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav"],
+                        ["example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav"],
+                        ["example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav"],
+                        ["example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav","example\\1.wav"]]; var
+                        row=1; %>
+                        <!-- 记录不同的数据库对应的切片方式 -->
+                        <%var select_arr=[[0,1,2,3], [4]]; select_num=0;%>
+                          <!-- 根据当前数据库名称，判断选择的展示指标 -->
+                          <% if(dbname=="competitorA" ){select_num=0;} else if(dbname=="name2" ){select_num=1;
+                            console.log(select_arr[select_num])} %>
+                            <!-- 根据测评指标，对指标数组循环 -->
+                            <% for(i in select_arr[select_num]){ index=select_arr[select_num][i];%>
+                              <!-- 第一行 -->
+                              <tr style="border-top-width: 3px;">
+                                <td>
+                                  <%= ceping_arr[index] %>
+                                </td>
+                                <td class="text-muted">
+                                  1
+                                </td>
+                                <td class="text-muted">
+                                  <%= score_des_arr[index][0] %>
+                                </td>
+                                <td>
+                                  <audio src="<%= example_arr[index][0] %>" id="audio_<%=row%>"></audio>
+                                  <span style="width: 100%;text-align: center; color: blue;">
+                                    <span class="audio_text" style="cursor: pointer;" id="start_<%=row%>"
+                                      onclick='play_audio("<%=row%>")'>
+                                      播放
+                                    </span>
+                                  </span>
+                                </td>
+                              </tr>
+                              <% row +=1; %>
+                                <!-- 第二行 -->
+                                <tr>
+                                  <td class="text-muted">
+                                    <%= ceping_des_arr[index] %>
+                                  </td>
+                                  <td class="text-muted">
+                                    2
+                                  </td>
+                                  <td class="text-muted">
+                                    <%= score_des_arr[index][1] %>
+                                  </td>
+                                  <td>
+                                    <audio src="<%= example_arr[index][1] %>" id="audio_<%=row%>"></audio>
+                                    <span style="width: 100%;text-align: center; color: blue;">
+                                      <span class="audio_text" style="cursor: pointer;" id="start_<%=row%>"
+                                        onclick='play_audio("<%=row%>")'>播放</span>
+                                    </span>
+                                  </td>
+                                </tr>
+                                <!-- index记录当前的行数 -->
+                                <% row +=1; %>
+                                  <!-- 三到五行循环显示 -->
+                                  <% for(let j=2; j <=4; j ++){ %>
+                                    <tr>
+                                      <td></td>
+                                      <td class="text-muted">
+                                        <%= j + 1%>
+                                      </td>
+                                      <td class="text-muted">
+                                        <%= score_des_arr[index][j] %>
+                                      </td>
+                                      <td>
+                                        <audio src="<%= example_arr[index][1] %>" id="audio_<%=row%>"></audio>
+                                        <span style="width: 100%;text-align: center; color: blue;">
+                                          <span class="audio_text" style="cursor: pointer;" id="start_<%=row%>"
+                                            onclick='play_audio("<%= row %>")'>播放</span>
+                                        </span>
+                                      </td>
+                                    </tr>
+                                    <% row +=1;}}%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
   </main>
   <footer>
@@ -351,39 +495,40 @@
   <script src="./js/tabler.min.js" defer></script>
   <script src="./js/demo.min.js" defer></script>
 
-
+  <!-- 下方评价标准的播放函数 -->
   <script type="text/javascript">
     function play_audio(id) {
-
+      // console.log(id)
+      let audios = document.getElementsByTagName('audio');
+      len = audios.length
+      // console.log(audios[1])
 
       // 如果当前音频未播放，播放音频，并修改为暂停
       var text = document.getElementById("start_" + id)
+      console.log(text)
       if (text.innerHTML == "播放") {
-
         // 修改所有标签为播放
-        for (let i = 0; i < 25; i++) {
+        for (let i = 1; i < len; i++) {
+          // console.log("start_" + i)
+          // console.log(document.getElementById("start_" + i).innerHTML)
           document.getElementById("start_" + i).innerHTML = "播放"
         }
         text.innerHTML = "暂停"
 
         // 除了当前音频外，暂停其他所有的
-        let audios = document.getElementsByTagName('audio');
         for (let i = 0; i < audios.length; i++) {
           if (i !== id) {
             audios[i].pause();
           }
         }
-
         // 播放当前音频
         var audio_player = document.getElementById("audio_" + id)
-        console.log(audio_player)
+        // console.log(audio_player)
         audio_player.play()
-
       } else {
         text.innerHTML = "播放"
-
         var audio_player = document.getElementById("audio_" + id)
-        console.log(audio_player)
+        // console.log(audio_player)
         audio_player.pause()
       }
 

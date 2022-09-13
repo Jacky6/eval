@@ -44,86 +44,69 @@
 
 <body>
 
-    <div class="container">
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap" />
-                </svg>
-            </a>
-
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-                <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
-            </ul>
-            
-            <% if(useraccount) { %>
-                <div class="col-md-3 text-end">
-                    <button type="button" class="btn btn-outline-primary me-2"
-                        onclick="window.location.href='/user/personalInfo'">个人中心</button>
-                    <a class="btn btn-outline-primary me-2" href="/user/logout"
-                        onclick="return confirm('确定退出吗?')">退出登录</a>
+    <header class="align-items-center justify-content-center justify-content-md-between border-bottom"
+        style="margin-bottom: 20px;">
+        <div class="container" style="margin-top: 10px;">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6 col-12 text-center">
+                    <h1 class='fw-bold' style="font-size: 30px;">
+                        主观听测平台
+                    </h1>
                 </div>
-                <% } else{ %>
-                    <div class="col-md-3 text-end">
-                        <% if(!useraccount) { %>
-                            <button type="button" class="btn btn-outline-primary me-2"
-                                onclick="window.location.href='/user/login'">登录</button>
-                            <button type="button" class="btn btn-outline-primary me-2"
-                                onclick="window.location.href='/user/register'">注册</button>
-                            <% } %>
+
+                <div class="col-lg-6 col-md-6 col-9">
+                    <ul class="nav  col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
+                        <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+                    </ul>
+                </div>
+
+
+                <% if(useraccount) { %>
+                    <div class="col-lg-3 col-md-3 col-12 text-center">
+                        <button type="button" class="btn btn-outline-primary me-2"
+                            onclick="window.location.href='/user/personalInfo'">个人中心</button>
+                        <a class="btn btn-outline-primary me-2" href="/user/logout"
+                            onclick="return confirm('确定退出吗?')">退出登录</a>
                     </div>
-                    <% } %>
-        </header>
-    </div>
+                    <% } else{ %>
+                        <div class="col-md-3 col-12 text-center">
+                            <% if(!useraccount) { %>
+                                <button type="button" class="btn btn-outline-primary me-2"
+                                    onclick="window.location.href='/user/login'">登录</button>
+                                <button type="button" class="btn btn-outline-primary me-2"
+                                    onclick="window.location.href='/user/register'">注册</button>
+                                <% } %>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-
-                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi me-2" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                    <span class="fs-5 fw-semibold">数据管理平台</span>
-                </a>
-
+    <% var select_dataset="竞品A" ; var dataset_list=['竞品A', 'data' ]%>
+        <div class="container">
+            <div class="row border-bottom" style="margin-bottom: 10px;">
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                             data-bs-target="#home-collapse" aria-expanded="true">
-                            数据集
+                            <div style="font-size: 20px; font-weight: 400;">
+                                当前数据集：<%= select_dataset %>
+                            </div>
                         </button>
                         <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">VoiceBANK</a></li>
-                                <li><a href="#" class="link-dark rounded">Librispeech</a></li>
+                                <% dataset_list.forEach(item=>{%>
+                                    <li><a href="#" class="link-dark rounded" style="font-size: 15px;">
+                                            <%= item %>
+                                        </a></li>
+                                    <% })%>
                             </ul>
                         </div>
                     </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            A
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">Overview</a></li>
-                                <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                                <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                                <li><a href="#" class="link-dark rounded">Annually</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
                 </ul>
-                </a>
+            </div>
 
-
-            </nav>
-
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <!-- 基本数据展示 -->
             <div class="row justify-content-center" style="margin-bottom: 10px;">
                 <div class="col-lg-3">
@@ -163,14 +146,13 @@
             </div>
 
             <div class="row justify-content-between" style="margin: 15px;">
-                
                 <!-- 今日已完成 -->
                 <div class="col-lg-2">
                     <div class="card top-card">
                         <div class="card-header" style="background-color: #55595c; ">
-                            <div class="top-card-title" >
+                            <div class="top-card-title">
                                 <div style="font-size: 15px;">
-                                    语言连续度平均分    
+                                    语言连续度平均分
                                 </div>
 
                             </div>
@@ -188,9 +170,9 @@
                 <div class="col-lg-2">
                     <div class="card top-card">
                         <div class="card-header" style="background-color: #55595c; ">
-                            <div class="top-card-title" >
+                            <div class="top-card-title">
                                 <div style="font-size: 15px;">
-                                    语音清晰度平均分    
+                                    语音清晰度平均分
                                 </div>
 
                             </div>
@@ -207,9 +189,9 @@
                 <div class="col-lg-2">
                     <div class="card top-card">
                         <div class="card-header" style="background-color: #55595c; ">
-                            <div class="top-card-title" >
+                            <div class="top-card-title">
                                 <div style="font-size: 15px;">
-                                    语音失真度平均分    
+                                    语音失真度平均分
                                 </div>
 
                             </div>
@@ -226,9 +208,9 @@
                 <div class="col-lg-2">
                     <div class="card top-card">
                         <div class="card-header" style="background-color: #55595c; ">
-                            <div class="top-card-title" >
+                            <div class="top-card-title">
                                 <div style="font-size: 15px;">
-                                    背景噪音消除效果平均分    
+                                    背景噪音消除效果平均分
                                 </div>
 
                             </div>
@@ -245,9 +227,9 @@
                 <div class="col-lg-2">
                     <div class="card top-card">
                         <div class="card-header" style="background-color: #55595c; ">
-                            <div class="top-card-title" >
+                            <div class="top-card-title">
                                 <div style="font-size: 15px;">
-                                    回声消除效果平均分    
+                                    回声消除效果平均分
                                 </div>
 
                             </div>
@@ -263,128 +245,118 @@
                 </div>
             </div>
 
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">数据评分分布</h1>
-                    <!-- <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            <!-- 表格展示 -->
+            <div class="row">
+                <div class="col-lg-6 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="chart-completion-tasks-2"></div>
                         </div>
-
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" id="dropdownMenu"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            可懂度
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                            <li><a class="dropdown-item" href="#">清晰度</a></li>
-                            <li><a class="dropdown-item" href="#">流畅度</a></li>
-                            <li><a class="dropdown-item" href="#">总分</a></li>
-                        </ul>
-
-                    </div> -->
+                    </div>
                 </div>
+            </div>
 
+            <!-- 测评记录表 -->
+            <div class="row">
                 <div style="margin: 15px;">
                     <h2>测评记录</h2>
                 </div>
+                <div class="container-xl">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="table-default" class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><button class="table-sort" data-sort="sort-id">ID</button></th>
+                                            <th><button class="table-sort" data-sort="sort-name">测评用户</button>
+                                            </th>
+                                            <th><button class="table-sort" data-sort="sort-date">最后更新时间</button>
+                                            </th>
+                                            <th><button class="table-sort" data-sort="sort-index1">语言连续度</button>
+                                            </th>
+                                            <th><button class="table-sort" data-sort="sort-index2">语音清晰度</button>
+                                            </th>
+                                            <th><button class="table-sort" data-sort="sort-index3">语音失真度</button>
+                                            </th>
+                                            <th><button class="table-sort" data-sort="sort-index4">背景噪音消除效果</button>
+                                            </th>
+                                            <th><button class="table-sort" data-sort="sort-index5">回声消除效果</button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-tbody">
+                                        <script>
+                                            var record_data = [
+                                                {
+                                                    "index1": 1,
+                                                    "index2": 1,
+                                                    "index3": 1,
+                                                    "index4": 0,
+                                                    "index5": 0,
+                                                    "updated_at": "6/9/2022 11:12:22",
+                                                    "useraccount": "zhouyan"
+                                                },
+                                                {
+                                                    "index1": 0,
+                                                    "index2": 0,
+                                                    "index3": 0,
+                                                    "index4": 4.5,
+                                                    "index5": 0,
+                                                    "updated_at": "6/9/2022 15:26:43",
+                                                    "useraccount": "zzc"
+                                                }
+                                            ]
+                                            var list_str = '';
+                                            var index = 1;
 
-                <div class="row">
-                    <div class="container-xl">
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="table-default" class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th><button class="table-sort" data-sort="sort-id">ID</button></th>
-                                                <th><button class="table-sort" data-sort="sort-name">测评用户</button></th>
-                                                <th><button class="table-sort" data-sort="sort-date">最后更新时间</button></th>
-                                                <th><button class="table-sort" data-sort="sort-index1">语言连续度</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index2">语音清晰度</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index3">语音失真度</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index4">背景噪音消除效果</button>
-                                                </th>
-                                                <th><button class="table-sort" data-sort="sort-index5">回声消除效果</button>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-tbody">
-                                            <script>
-                                                var record_data = [
-                                                    {
-                                                        "index1": 1,
-                                                        "index2": 1,
-                                                        "index3": 1,
-                                                        "index4": 0,
-                                                        "index5": 0,
-                                                        "updated_at": "6/9/2022 11:12:22",
-                                                        "useraccount": "zhouyan"
-                                                    },
-                                                    {
-                                                        "index1": 0,
-                                                        "index2": 0,
-                                                        "index3": 0,
-                                                        "index4": 4.5,
-                                                        "index5": 0,
-                                                        "updated_at": "6/9/2022 15:26:43",
-                                                        "useraccount": "zzc"
-                                                    }
-                                                ]
-                                                var list_str = '';
-                                                var index = 1;
-
-                                                record_data.forEach(item => {
-                                                    var update_data_str = item.updated_at
-                                                    var day = update_data_str.split("/")[0]
-                                                    var month = update_data_str.split("/")[1]
-                                                    var year = update_data_str.split("/")[2].split(" ")[0]
-                                                    var time = update_data_str.split("/")[2].split(" ")[1]
-                                                    // console.log(day, month, year)
-                                                    var date_str = year + '-' + month + '-' + day + ' ' + time
-                                                    // console.log(date_str)
-                                                    var date = new Date(date_str)
-                                                    var timestamp = Date.parse(date)
-                                                    // console.log(timestamp)
-                                                    list_str += `
-                                                    <tr>
-                                                        <td class="sort-id">${index}</td>
-                                                        <td class="sort-name">${item.useraccount}</td>
-                                                        <td class="sort-date" data-date=${timestamp}">${item.updated_at}</td>
-                                                        <td class="sort-index1">${item.index1}</td>
-                                                        <td class="sort-index2">${item.index2}</td>
-                                                        <td class="sort-index3">${item.index3}</td>
-                                                        <td class="sort-index4">${item.index4}</td>
-                                                        <td class="sort-index5">${item.index5}</td>
-                                                    </tr>
-                                                     `
-                                                    index += 1
-                                                })
-                                                document.write(list_str)
-                                            </script>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            record_data.forEach(item => {
+                                                var update_data_str = item.updated_at
+                                                var day = update_data_str.split("/")[0]
+                                                var month = update_data_str.split("/")[1]
+                                                var year = update_data_str.split("/")[2].split(" ")[0]
+                                                var time = update_data_str.split("/")[2].split(" ")[1]
+                                                // console.log(day, month, year)
+                                                var date_str = year + '-' + month + '-' + day + ' ' + time
+                                                // console.log(date_str)
+                                                var date = new Date(date_str)
+                                                var timestamp = Date.parse(date)
+                                                // console.log(timestamp)
+                                                list_str += `
+                                                <tr>
+                                                    <td class="sort-id">${index}</td>
+                                                    <td class="sort-name">${item.useraccount}</td>
+                                                    <td class="sort-date" data-date=${timestamp}">${item.updated_at}</td>
+                                                    <td class="sort-index1">${item.index1}</td>
+                                                    <td class="sort-index2">${item.index2}</td>
+                                                    <td class="sort-index3">${item.index3}</td>
+                                                    <td class="sort-index4">${item.index4}</td>
+                                                    <td class="sort-index5">${item.index5}</td>
+                                                </tr>
+                                                 `
+                                                index += 1
+                                            })
+                                            document.write(list_str)
+                                        </script>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
-    </div>
+        </div>
 
 
-    <!-- Libs JS -->
-    
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="/js/list.min.js" defer></script>
-    <script src="/js/apexcharts.min.js"></script>
-    <!-- Tabler Core -->
-    <script src="/js/tabler.min.js" defer></script>
-    <script src="/js/demo.min.js" defer></script>
+        <!-- Libs JS -->
+
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="/js/list.min.js" defer></script>
+        <script src="/js/apexcharts.min.js"></script>
+        <!-- Tabler Core -->
+        <script src="/js/tabler.min.js" defer></script>
+        <script src="/js/demo.min.js" defer></script>
 
 
         <!-- 表格排序 -->

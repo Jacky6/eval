@@ -12,10 +12,8 @@ async function CreateDatabase() {
     return await sequelize.sync({force: true}).catch((err) => console.error(err)).finally();//() => sequelize.close());
 }
 
-// 待测评数据录入
-const dbpath = allocation.dbpath;
-const dbname = allocation.dbname;
-async function PushData() {
+// 待测评数据库录入
+async function PushData(dbname, dbpath) {
     // 获取参数
     const isFile = filename => {
         return fs.lstatSync(filename).isFile();
@@ -47,7 +45,11 @@ async function main() {
     // 创建数据库
     await CreateDatabase();
     // 导入待测评数据
-    PushData();
+    for(key in allocation.dbnames){
+        const dbpath = allocation.dbpaths[key];
+        const dbname = allocation.dbnames[key];
+        await PushData(dbname, dbpath);
+    }
 }
 
 main();

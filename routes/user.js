@@ -2,8 +2,10 @@
 const Router = require('koa-router');
 const userService = require('../services/user');
 const dataService = require('../services/data');
+const cepingService = require('../services/ceping');
 const guard = require('../middlewares/guard');
 const router = new Router({prefix: '/user'});
+const allocation = require('../alloction');
 
 router.get('/login', async (ctx) => {
     await ctx.render('user/login');
@@ -44,7 +46,30 @@ router.get('/logout', async (ctx) => {
 });
 
 router.get('/personalInfo', async (ctx) => {
-    await ctx.render('/user/personalInfo');
+    const useraccount = ctx.state.useraccount;
+    const evalOpt = allocation.evalOpt;
+    page = 1;
+    size = 10;
+    const{rows, count} = await cepingService.listByUser(useraccount, page, size);
+    ret = cepingService.listByUser(useraccount, page, size);
+    var personal_tar = [];
+    for(key in rows){
+        var item = {};
+        item['id'] = rows[key]['id'];
+        item['comment'] = rows[key]['comment'];
+        item['createdAt'] = rows[key]['createdAt'];
+        item['updatedAt'] = rows[key]['updatedAt'];
+        var index_arr = [];
+        for(key1 in evalOpt){
+            index_arr.push(rows[key][evalOpt[key1]]);
+        };
+        item['index_arr'] = index_arr;
+        personal_tar.push(item);
+    }
+    console.log(personal_tar);
+    await ctx.render('/user/personalInfo', {
+        personal_tar:personal_tar,    
+    });
 });
 
 router.get('/home', guard, async (ctx) => {

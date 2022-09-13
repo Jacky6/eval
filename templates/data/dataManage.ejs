@@ -45,97 +45,73 @@
 
 <body>
 
-    <div class="container">
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap" />
-                </svg>
-            </a>
-
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
-                <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
-            </ul>
-
-            <!-- <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2"
-          onclick="window.location.href='/user/login'">登录</button>
-        <button type="button" class="btn btn-primary">登出</button>
-      </div> -->
-            <% if(useraccount) { %>
-                <div class="col-md-3 text-end">
-                    <button type="button" class="btn btn-outline-primary me-2"
-                        onclick="window.location.href='/user/personalInfo'">个人中心</button>
-                    <a class="btn btn-outline-primary me-2" href="/user/logout"
-                        onclick="return confirm('确定退出吗?')">退出登录</a>
+    <header class="align-items-center justify-content-center justify-content-md-between border-bottom"
+        style="margin-bottom: 20px;">
+        <div class="container" style="margin-top: 10px;">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6 col-12 text-center">
+                    <h1 class='fw-bold' style="font-size: 30px;">
+                        主观听测平台
+                    </h1>
                 </div>
-                <% } else{ %>
-                    <div class="col-md-3 text-end">
-                        <% if(!useraccount) { %>
-                            <button type="button" class="btn btn-outline-primary me-2"
-                                onclick="window.location.href='/user/login'">登录</button>
-                            <button type="button" class="btn btn-outline-primary me-2"
-                                onclick="window.location.href='/user/register'">注册</button>
-                            <% } %>
+
+                <div class="col-lg-6 col-md-6 col-9">
+                    <ul class="nav  col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="/" class="nav-link px-2 link-secondary">主页</a></li>
+                        <li><a href="/data/dataManage" class="nav-link px-2 link-dark">音频数据</a></li>
+                    </ul>
+                </div>
+
+
+                <% if(useraccount) { %>
+                    <div class="col-lg-3 col-md-3 col-12 text-center">
+                        <button type="button" class="btn btn-outline-primary me-2"
+                            onclick="window.location.href='/user/personalInfo'">个人中心</button>
+                        <a class="btn btn-outline-primary me-2" href="/user/logout"
+                            onclick="return confirm('确定退出吗?')">退出登录</a>
                     </div>
-                    <% } %>
-        </header>
-    </div>
+                    <% } else{ %>
+                        <div class="col-md-3 col-12 text-center">
+                            <% if(!useraccount) { %>
+                                <button type="button" class="btn btn-outline-primary me-2"
+                                    onclick="window.location.href='/user/login'">登录</button>
+                                <button type="button" class="btn btn-outline-primary me-2"
+                                    onclick="window.location.href='/user/register'">注册</button>
+                                <% } %>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-
-                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi me-2" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                    <span class="fs-5 fw-semibold">数据管理平台</span>
-                </a>
-
+    <% var select_dataset="竞品A" ; var dataset_list=['竞品A', 'data' ]%>
+        <div class="container">
+            <div class="row border-bottom" style="margin-bottom: 10px;">
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                             data-bs-target="#home-collapse" aria-expanded="true">
-                            数据集
+                            <div style="font-size: 20px; font-weight: 400;">
+                                当前数据集：<%= select_dataset %>
+                            </div>
                         </button>
                         <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">VoiceBANK</a></li>
-                                <li><a href="#" class="link-dark rounded">Librispeech</a></li>
+                                <% dataset_list.forEach(item=>{%>
+                                    <li><a href="#" class="link-dark rounded" style="font-size: 15px;">
+                                            <%= item %>
+                                        </a></li>
+                                    <% })%>
                             </ul>
                         </div>
                     </li>
-
                 </ul>
-                </a>
-
-
-            </nav>
-
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">竞品A数据集</h1>
-                    <!-- <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar"></span>
-                            This week
-                        </button>
-                    </div> -->
-                </div>
-
-                <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-                <!-- 基本数据展示 -->
+            </div>
+            <!-- 表格展示 -->
+            <div class="row">
                 <div class="row justify-content-center" style="margin-bottom: 10px;">
                     <!-- 共完成 -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-6">
                         <div class="card top-card">
                             <div class="card-header" style="background-color: #55595c; ">
                                 <div class="top-card-title">
@@ -153,7 +129,7 @@
                     </div>
 
                     <!-- 今日已完成 -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-6">
                         <div class="card top-card">
                             <div class="card-header" style="background-color: #55595c; ">
                                 <div class="top-card-title">
@@ -171,7 +147,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-lg-6 col-xl-4">
                     <div class="card">
                         <div class="card-body">
@@ -179,7 +154,9 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <!-- 数据列表 -->
+            <div class="row">
                 <div style="margin: 15px;">
                     <h2>数据列表</h2>
                 </div>
@@ -193,8 +170,10 @@
                                         <thead>
                                             <tr>
                                                 <th><button class="table-sort" data-sort="sort-id">ID</button></th>
-                                                <th><button class="table-sort" data-sort="sort-name">文件名</button></th>
-                                                <th><button class="table-sort" data-sort="sort-num">总测评次数</button></th>
+                                                <th><button class="table-sort" data-sort="sort-name">文件名</button>
+                                                </th>
+                                                <th><button class="table-sort" data-sort="sort-num">总测评次数</button>
+                                                </th>
                                                 <th><button class="table-sort" data-sort="sort-index1">语言连续度</button>
                                                 </th>
                                                 <th><button class="table-sort" data-sort="sort-index2">语音清晰度</button>
@@ -243,17 +222,17 @@
 
                                                 record_data.forEach(item => {
                                                     list_str += `
-                                                    <tr>
-                                                        <td class="sort-id">${index}</td>
-                                                        <td class="sort-name"><a href="/data/dataManageDetail">${item.dataname}</a></td>
-                                                        <td class="sort-num">${item.evalnum}</td>
-                                                        <td class="sort-index1">${item.index1}</td>
-                                                        <td class="sort-index2">${item.index2}</td>
-                                                        <td class="sort-index3">${item.index3}</td>
-                                                        <td class="sort-index4">${item.index4}</td>
-                                                        <td class="sort-index5">${item.index5}</td>
-                                                    </tr>
-                                                     `
+                                    <tr>
+                                        <td class="sort-id">${index}</td>
+                                        <td class="sort-name"><a href="/data/dataManageDetail">${item.dataname}</a></td>
+                                        <td class="sort-num">${item.evalnum}</td>
+                                        <td class="sort-index1">${item.index1}</td>
+                                        <td class="sort-index2">${item.index2}</td>
+                                        <td class="sort-index3">${item.index3}</td>
+                                        <td class="sort-index4">${item.index4}</td>
+                                        <td class="sort-index5">${item.index5}</td>
+                                    </tr>
+                                        `
                                                     index += 1
                                                 })
                                                 document.write(list_str)
@@ -265,90 +244,89 @@
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
-    </div>
 
 
-    <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
-        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
-        crossorigin="anonymous"></script>
-    <script src="./js/dataManage.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+            integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+            integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+            crossorigin="anonymous"></script>
+        <script src="./js/dataManage.js"></script>
 
-    <!-- Libs JS -->
-    <script src="/js/list.min.js" defer></script>
-    <script src="/js/apexcharts.min.js"></script>
-    <!-- Tabler Core -->
-    <script src="/js/tabler.min.js" defer></script>
-    <script src="/js/demo.min.js" defer></script>
+        <!-- Libs JS -->
+        <script src="/js/list.min.js" defer></script>
+        <script src="/js/apexcharts.min.js"></script>
+        <!-- Tabler Core -->
+        <script src="/js/tabler.min.js" defer></script>
+        <script src="/js/demo.min.js" defer></script>
 
-    <script>
-        // @formatter:off
-        document.addEventListener("DOMContentLoaded", function () {
-            window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-2'), {
-                chart: {
-                    type: "line",
-                    fontFamily: 'inherit',
-                    height: 240,
-                    parentHeightOffset: 0,
-                    toolbar: {
+        <script>
+            // @formatter:off
+            document.addEventListener("DOMContentLoaded", function () {
+                window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-2'), {
+                    chart: {
+                        type: "line",
+                        fontFamily: 'inherit',
+                        height: 240,
+                        parentHeightOffset: 0,
+                        toolbar: {
+                            show: false,
+                        },
+                        animations: {
+                            enabled: false
+                        },
+                    },
+                    fill: {
+                        opacity: 1,
+                    },
+                    stroke: {
+                        width: 2,
+                        lineCap: "round",
+                        curve: "smooth",
+                    },
+                    series: [{
+                        name: "Tasks completion",
+                        data: [155, 65, 465, 265, 225, 325, 80]
+                    }],
+                    grid: {
+                        padding: {
+                            top: -20,
+                            right: 0,
+                            left: -4,
+                            bottom: -4
+                        },
+                        strokeDashArray: 4,
+                    },
+                    xaxis: {
+                        labels: {
+                            padding: 0,
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        type: 'datetime',
+                    },
+                    yaxis: {
+                        labels: {
+                            padding: 4
+                        },
+                    },
+                    labels: [
+                        '2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26'
+                    ],
+                    // colors: [tabler.getColor("primary")],
+                    legend: {
                         show: false,
                     },
-                    animations: {
-                        enabled: false
-                    },
-                },
-                fill: {
-                    opacity: 1,
-                },
-                stroke: {
-                    width: 2,
-                    lineCap: "round",
-                    curve: "smooth",
-                },
-                series: [{
-                    name: "Tasks completion",
-                    data: [155, 65, 465, 265, 225, 325, 80]
-                }],
-                grid: {
-                    padding: {
-                        top: -20,
-                        right: 0,
-                        left: -4,
-                        bottom: -4
-                    },
-                    strokeDashArray: 4,
-                },
-                xaxis: {
-                    labels: {
-                        padding: 0,
-                    },
-                    tooltip: {
-                        enabled: false
-                    },
-                    type: 'datetime',
-                },
-                yaxis: {
-                    labels: {
-                        padding: 4
-                    },
-                },
-                labels: [
-                    '2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26'
-                ],
-                // colors: [tabler.getColor("primary")],
-                legend: {
-                    show: false,
-                },
-            })).render();
-        });
+                })).render();
+            });
       // @formatter:on
-    </script>
+        </script>
 
         <!-- 表格排序 -->
         <script>
@@ -357,7 +335,7 @@
                     sortClass: 'table-sort',
                     listClass: 'table-tbody',
                     valueNames: ['sort-id', 'sort-name', 'sort-num', 'sort-index1', 'sort-index2', 'sort-index3', 'sort-index4', 'sort-index5',
-                        
+
                     ]
                 });
             })

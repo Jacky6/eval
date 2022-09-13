@@ -10,20 +10,16 @@ const User = sequelize.import('../models/user');
 const evalOpt = allocation.evalOpt;
 
 // 测评一条数据
-//:para 
-//dataname:数据名称 useraccount：用户账号
-//obj：字典{indexi:indexi,...,comment:'comment'}
+// 输入：dataname:数据名称 useraccount：用户账号 obj：字典{indexi:indexi,...,comment:'comment'}
 exports.publish = async function (dataname, useraccount, obj) {
     const targetdata = await dataService.show(dataname);
     if (targetdata === null) {
-        console.log(dataname);
-        throw new Error('数据不存在');
+        throw new Error('数据',dataname,'不存在');
     }
 
     const targetuser = await User.findByPk(useraccount);
     if(targetuser === null) {
-        console.log(useraccount);
-        throw new Error('用户不存在');
+        throw new Error('用户',useraccount,'不存在');
     }
 
     const targetcepingid = await ceping.findOne({
@@ -42,7 +38,6 @@ exports.publish = async function (dataname, useraccount, obj) {
         return ceping.create(obj);
     }
     else{//更新测评结果
-        console.log(obj);
         return ceping.update(obj,{
             where:{
                 dataname,
@@ -65,7 +60,7 @@ exports.destroy = async function (cepingId, useraccount) {
 // 查看指定数据测评列表
 // 输入： datanaem，page（），size(一页大小)
 // 输出：{ count(总数)，rows(第page页全部) }
-exports.listByData = async function(dataname, page, size) {
+exports.listByData = async function(dataname, page=1, size=1) {
     var tar = [];
     tar.push('id');
     tar.push('dataname');
