@@ -9,32 +9,32 @@ module.exports = (sequelize, DataTypes) => {
     const evalOpt = allocation.evalOpt;
     const obj = {};
     for(key in evalOpt){
-        obj[evalOpt[key]] = {type: DataTypes.INTEGER, defaultValue:0, allowNull:true, comment: '指标'};
+        obj[evalOpt[key]] = {type: DataTypes.FLOAT, defaultValue:0, allowNull:true, comment: '指标'};
     }
 
     obj['comment'] = {type: DataTypes.STRING(140), allowNull: true, comment: '评论内容'}
 
-    class ceping extends Model {
+    class evaluation extends Model {
     }
 
     //  模型定义
-    ceping.init(obj, {
+    evaluation.init(obj, {
         sequelize: sequelize,
-        tableName: 'ceping',
+        tableName: 'evaluation',
         //timestamps: false,
         underscored: true,
         paranoid: true,
     });
 
     //关联定义
-    ceping.belongsTo(data, {  // 测评属于数据
+    evaluation.belongsTo(data, {  // 测评属于数据
         constraints: false,
         foreignKey: 'dataname'
     })
-    ceping.belongsTo(User, {   // 测评属于
+    evaluation.belongsTo(User, {   // 测评属于
         constraints: false,
         foreignKey: 'useraccount',
     })
 
-    return ceping;
+    return evaluation;
 };

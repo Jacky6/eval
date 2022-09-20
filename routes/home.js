@@ -4,13 +4,13 @@ const Router = require('koa-router');
 const router = new Router();
 const guard = require('../middlewares/guard');
 const dataService = require('../services/data');
-const cepingService = require('../services/ceping');
+const evaluationService = require('../services/evaluation');
 
 router.get('/', async (ctx) => {
     ctx.state.full = 0;
     useraccount = ctx.state.useraccount;
     if(useraccount != undefined){
-        ret1 = await cepingService.listByUser(useraccount);
+        ret1 = await evaluationService.listByUser(useraccount);
         usernum = ret1['count'];
         ret2 = await dataService.list();
         datanum = ret2['count'];
@@ -59,7 +59,7 @@ router.post('/', guard, async (ctx) => {
     } 
     const dataname = new Buffer.from(ctx.state.dataname, 'base64').toString();
     const useraccount = ctx.state.useraccount;
-    await cepingService.publish(dataname, useraccount, obj);
+    await evaluationService.publish(dataname, useraccount, obj);
     
     ctx.cookies.set('flag', 1, {
         signed: true,

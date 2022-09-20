@@ -1,7 +1,7 @@
 // 数据模块
 const Router = require('koa-router');
 const dataService = require('../services/data');
-const cepingService = require('../services/ceping');
+const evaluationService = require('../services/evaluation');
 const guard = require('../middlewares/guard');
 const router = new Router({prefix: '/data'});
 
@@ -20,7 +20,7 @@ router.get('/show/:id', async (ctx) => {
         throw new Error('数据不存在');
     }
     // 读取测评
-    const {rows: cepings, count} = await cepingService.listByData(dataId, page, size);
+    const {rows: cepings, count} = await evaluationService.listByData(dataId, page, size);
     await ctx.render('data/show', {
         targetData,
         cepings,

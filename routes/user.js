@@ -2,7 +2,7 @@
 const Router = require('koa-router');
 const userService = require('../services/user');
 const dataService = require('../services/data');
-const cepingService = require('../services/ceping');
+const evaluationService = require('../services/evaluation');
 const guard = require('../middlewares/guard');
 const router = new Router({prefix: '/user'});
 const allocation = require('../alloction');
@@ -63,7 +63,7 @@ router.get('/personalInfo', async (ctx) => {
     const dbname = allocation.dbnames[0];
     page = 1;
     size = 10;
-    var { rows, count } = await cepingService.listByUser(useraccount, dbname ,page, size);
+    var { rows, count } = await evaluationService.listByUser(useraccount, dbname ,page, size);
     const usernum = count;
     var personal_tar = [];
     for (key in rows) {
@@ -104,7 +104,7 @@ router.get('/personalInfo/:params', async (ctx) => {
     const size = 10;
     console.log(dbname);
 
-    var { rows, count } = await cepingService.listByUser(useraccount, dbname, page, size);
+    var { rows, count } = await evaluationService.listByUser(useraccount, dbname, page, size);
     const usernum = count;
     var personal_tar = [];
     for (key in rows) {
@@ -139,7 +139,7 @@ router.get('/personalInfo/:params', async (ctx) => {
 router.get('/delete/:cepingId', guard, async (ctx) => {
     const cepingId = ctx.params.cepingId;
     const useraccount = ctx.state.useraccount;
-    await cepingService.destroy(cepingId, useraccount);
+    await evaluationService.destroy(cepingId, useraccount);
     ctx.redirect('back');
 });
 

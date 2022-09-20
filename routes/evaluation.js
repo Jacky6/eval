@@ -1,15 +1,15 @@
 // 测评模块
 const allocation = require('../alloction');
 const Router = require('koa-router');
-const cepingService = require('../services/ceping');
+const evaluationService = require('../services/evaluation');
 const guard = require('../middlewares/guard');
-const router = new Router({prefix: '/ceping'});
+const router = new Router({prefix: '/evaluation'});
 
 // 添加或更新测评 （提交一条测评）
 // :todo
 router.post('/update', guard, async (ctx) => {
     const {dataname, useraccount, comment, index} = ctx.request.body;   // index 是测评结果数组
-    await cepingService.publish(dataname, useraccount, comment, index);
+    await evaluationService.publish(dataname, useraccount, comment, index);
     await ctx.redirect('/');
 }); 
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const sequelize = require('./shared/sequelize');
 sequelize.import('./models/data');
 sequelize.import('./models/user');
-sequelize.import('./models/ceping');
+sequelize.import('./models/evaluation');
 const dataService = require('./services/data');
 const allocation = require('./alloction');
 

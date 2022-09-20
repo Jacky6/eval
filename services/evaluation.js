@@ -7,7 +7,7 @@ const Op = Sequelize.Op
 const dataService = require('./data');
 const userService = require('./user');
 
-const ceping = sequelize.import('../models/ceping');
+const evaluation = sequelize.import('../models/evaluation');
 const data = sequelize.import('../models/data');
 const User = sequelize.import('../models/user');
 
@@ -26,7 +26,7 @@ exports.publish = async function (dataname, useraccount, obj) {
         throw new Error('用户',useraccount,'不存在');
     }
 
-    const targetcepingid = await ceping.findOne({
+    const targetcepingid = await evaluation.findOne({
         attributes: ['id'], // 指定返回字段
         where:{
             dataname,
@@ -39,10 +39,10 @@ exports.publish = async function (dataname, useraccount, obj) {
         obj['dataname'] = dataname;
         dataService.addevalnum(dataname);
         userService.addevalnum(useraccount);
-        return ceping.create(obj);
+        return evaluation.create(obj);
     }
     else{//更新测评结果
-        return ceping.update(obj,{
+        return evaluation.update(obj,{
             where:{
                 dataname,
                 useraccount
@@ -53,7 +53,7 @@ exports.publish = async function (dataname, useraccount, obj) {
 
 // 删除一条测评(假删除)
 exports.destroy = async function (cepingId, useraccount) {
-    const target = await ceping.findByPk(cepingId);
+    const target = await evaluation.findByPk(cepingId);
     if (target === null || target.useraccount !== useraccount) {
         throw new Error('你无权删除该评论');
     }
@@ -74,7 +74,7 @@ exports.listByData = async function(dataname, page=1, size=1) {
     tar.push('comment');
     tar.push('createdAt');
     tar.push('updatedAt');
-    return ceping.findAndCountAll({
+    return evaluation.findAndCountAll({
         attributes: tar,
         where: {dataname},
         offset: (page-1) * size,
@@ -97,7 +97,7 @@ exports.listByUser = async function(useraccount, dbname='none', page=1, size=1) 
     tar.push('createdAt');
     tar.push('updatedAt');
     if(dbname === 'none'){
-        return await ceping.findAndCountAll({
+        return await evaluation.findAndCountAll({
             attributes: tar,
             where: {useraccount},
             include: [{
@@ -108,7 +108,7 @@ exports.listByUser = async function(useraccount, dbname='none', page=1, size=1) 
             order: [['id','DESC']]
         })
     }
-    return await ceping.findAndCountAll({
+    return await evaluation.findAndCountAll({
         attributes: tar,
         where: {useraccount},
         include: [{
@@ -137,7 +137,7 @@ exports.listByDataAndUser = async function(dataname, useraccount) {
     tar.push('comment');
     tar.push('createdAt');
     tar.push('updatedAt');
-    return ceping.findOne({
+    return evaluation.findOne({
         attributes: tar,
         where: {
             dataname,
@@ -150,7 +150,7 @@ exports.listByDataAndUser = async function(dataname, useraccount) {
 // 输入：dbname, index(测评项), [down, up](上下限)
 // 输出：{rows, count}
 exports.listByIndex = async function(dataname, index, down=0, up=5){
-    return await ceping.findAndCountAll({
+    return await evaluation.findAndCountAll({
         where: {dataname, 
             index1: {
                 [Op.between]:[down, up],

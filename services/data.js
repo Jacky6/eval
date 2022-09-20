@@ -1,6 +1,6 @@
 const sequelize = require('../shared/sequelize');
 const data = sequelize.import('../models/data');
-const ceping = sequelize.import('../models/ceping');
+const evaluation = sequelize.import('../models/evaluation');
 const allocation = require('../alloction');
 
 // 批量添加数据（管理员功能）
@@ -29,7 +29,7 @@ exports.show = async function (dataname) {
     avg['datapath'] = datapath;
     avg['evalnum'] = evalnum;
     for(key in evalOpt){    
-            result = await ceping.findAll({
+            result = await evaluation.findAll({
             attributes:[[sequelize.fn('avg',sequelize.col(evalOpt[key])), 'avg'+evalOpt[key]]],
             raw: true,
             where: {
@@ -68,7 +68,7 @@ exports.randone = async function (useraccount) {
                 attributes: ['dataname', 'dbname', 'datapath'],
                 order: [sequelize.literal('rand()')]
             });
-            var targetcepingid = await ceping.findOne({
+            var targetcepingid = await evaluation.findOne({
                 attributes: ['id'], // 指定返回字段
                 where:{
                     dataname,

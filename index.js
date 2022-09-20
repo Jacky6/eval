@@ -7,7 +7,7 @@ const authenticate = require('./middlewares/authenticate');
 const homeRoute = require('./routes/home');
 const userRoute = require('./routes/user');
 const dataRoute = require('./routes/data');
-const cepingRoute = require('./routes/ceping');
+const evaluationRoute = require('./routes/evaluation');
 
 const app = new Koa({
     keys:['KGJ6NLxqOkYCNr1h']   //加密字串
@@ -29,7 +29,7 @@ app.use(authenticate);
 app.use(homeRoute.routes()).use(homeRoute.allowedMethods());
 app.use(userRoute.routes()).use(userRoute.allowedMethods());
 app.use(dataRoute.routes()).use(dataRoute.allowedMethods());
-app.use(cepingRoute.routes()).use(cepingRoute.allowedMethods());
+app.use(evaluationRoute.routes()).use(evaluationRoute.allowedMethods());
 
 app.listen(8080, () => {
     console.log('listen on 8080')
